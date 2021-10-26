@@ -1,5 +1,7 @@
 //Create div tree class ? 
 
+const root = document.getElementById('root');
+
 class Element {
   #type;
   #parent;
@@ -11,6 +13,7 @@ class Element {
     this.#parent = parent;
     this.#node = null;
     this.#elementObject = elementObject;
+    this.createNode();
   }
   
   get node() {
@@ -89,23 +92,3 @@ class Element {
 }
 
 
-const div = new Element('div', document.body, { className: 'hello', id: 'coolDiv'})
-div.createNode();
-const buttonOne = new Element('button', div.node, { id: 'btnOne', innerText: 'One', className: 'btns' })
-buttonOne.createNode();
-const buttonTwo = new Element('button', div.node, { id: 'btnTwo', innerText: 'Two', className: 'btns' })
-buttonTwo.createNode();
-const buttonThree = new Element('button', div.node, { id: 'btnThree', innerText: 'Three' , className: 'btns' })
-buttonThree.createNode();
-
-[buttonOne, buttonTwo, buttonThree].forEach(elem => {
-  elem.addEventListener('click', () => {
-    const node = elem.node;
-    // elem.insertAfterSibling();
-    elem.insertAfterSibling();
-  })
-})
-// buttonOne.addEventListener('click', () => {
-//   buttonOne.updateNode({ innerText: 'Hello' })
-//   // buttonOne.changeParent(document.body);
-// })
