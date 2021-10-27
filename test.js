@@ -1,28 +1,30 @@
 
 function createHeader() {
-  const header = new Element('header', root, { className: 'header' });
-  const div = new Element('div', header.node, { className: 'header__div' });
-  const h1 = new Element('h1', div.node, { className: 'header__div--h1', innerText: "Welcome To New Framework!" });
-  const h2 = new Element('h2', div.node, { className: 'header__div--h2', innerText: "Click me" });
-  const divTwo = new Element('div', header.node, { className: 'header__div--two' });
+  const header = new Element('header', root, { className: 'hello', innerText: 'yo', id:'hello'})
+    
 
-  let counter = 0;
-  h2.addEventListener('click', () => {
-    if (counter % 2 === 0) {
-      divTwo.insertBeforeSibling();
-      h2.updateNode({ className: 'hiho' })
-    } else {
-      divTwo.insertAfterSibling();
-      h2.updateNode({ className: 'waow' })
-
-    }
-
-    counter++;
-  })
- 
+  // const header = new Element('header', root, { className: 'header' });
+  //   const header__div = new Element('div', header, { className: 'header__div' });
+  //     const h1 = new Element('h1', header__div, { className: 'header__div--h1', innerText: "Welcome To New Framework!" });
+  //     const h2 = new Element('h2', header__div, { className: 'header__div--h2', innerText: "hi me"});
+  //     const textinput = new Element('input', header__div, { id: 'text-input', type: 'text', value: 5 });
+  // textinput.addEventListener('click', () => {
+  //   const value = textinput.value * 2;
+  //   textinput.updateNode({ value });
+  //   h2.updateNode({ innerText: value });
+  //   h2.addStyle('color', 'red');
+  // })
 }
 
 createHeader();
+
+// const section = new Element('section', root);
+//   const section__button = new Element('button', section, { innerText: 'A button' });
+//   section__button.addEventListener('click', () => {
+//     section__button.updateNode({ innerText: "you clicked me", id: "five" });
+//   })
+
+
 
 
 
