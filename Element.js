@@ -4,6 +4,7 @@ class Element {
   #parent;
   #node;
   #elementObject;
+  #removed;
 
   constructor(type, parent, elementObject) {
     this.#type = type;
@@ -11,6 +12,7 @@ class Element {
     this.#node = null;
     this.#elementObject = elementObject;
     this.#createNode();
+    this.#removed = false;
   }
   
   get node() {
@@ -80,6 +82,28 @@ class Element {
     }
   }
 
+  toggleNode() {
+    if (this.#removed === true) {
+      this.addNode();
+    } else {
+      this.removeNode();
+    }
+  } 
+
+  addNode() {
+    if (this.#removed === false) {
+      throw new Error('Adding a node previously not removed is not possible, try "copyNode()" instead.');
+    }
+
+    this.parent.appendChild(this.node);
+    this.#removed = false;
+  }
+  
+  removeNode() {
+    this.parent.removeChild(this.node);
+    this.#removed = true;
+  }
+
   changeParent(newParentNode) {
     //Check type of newParentNode, needs to be object
     if (this.#parent !== newParentNode) {
@@ -87,6 +111,14 @@ class Element {
       this.#parent = newParentNode;
       this.#parent.appendChild(this.node);
     }
+  }
+
+  addEventListener(event, callback) {
+    this.node.addEventListener(event, callback); 
+  }
+
+  addStyle(property, css) {
+    this.#node.style[property] = css;
   }
 
   insertBeforeSibling() {
@@ -122,14 +154,6 @@ class Element {
       const next = childrenList[indexPositionOfTarget + 1]
       this.#parent.insertBefore(next, current)
     } 
-  }
-
-  addEventListener(event, callback) {
-    this.node.addEventListener(event, callback); 
-  }
-
-  addStyle(property, css) {
-    this.#node.style[property] = css;
   }
 
 }
