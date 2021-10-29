@@ -193,60 +193,7 @@ class Generator {
     this.generateElementsFromTree();
     return this.elementsArray;
   } 
-
-
 }
 
-const generator = new Generator()
-const [header, div, h1, button] = generator.createTree(`
-  header className: 'header'
-    div className: 'header__placeholder'
-      h1 className: 'placeholder__text' innerText: 'Nova'
-      button id: 'hello' innerText: 'hiho'
-`, 2)
-
-button.addEventListener('click', () => {
-  h1.addStyle('color', 'red');
-})
-
-// Tree creation from pseudo html input from generator below
-const exampleObj = [{
-  tag: 'div',
-  parent: 'NODE TO PARENT',
-  propertyObject: { className: 'helloDiv' },
-  children: [
-    {
-      tag: 'section',
-      parent: 'NODE TO PARENT',
-      propertyObject: {},
-      children: [
-        { type: 'h1',
-          parent: 'NODE TO PARENT',
-          propertyObject: { className: 'helo', innerText: 'hejsan' },
-          children: {}
-        }
-      ]
-    },
-    {
-      tag: 'article',
-      parent: 'NODE TO PARENT',
-      propertyObject: {},
-      children: {}
-    }
-  ],
-
-},
-{
-  tag: 'div',
-  parent: 'NODE TO PARENT',
-  propertyObject: {},
-  children: [{
-    type: 'div',
-    parent: 'NODE TO PARENT',
-    elementObject: {}
-    }
-  ]
-}
-]
 
 

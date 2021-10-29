@@ -2,9 +2,20 @@
 function createHeader() {
   // for (const tag in window) {
   //   console.log(tag);
-  // }
+  // 
 
- 
+const generator = new Generator()
+const [header, div, h1, button] = generator.createTree(`
+  header className: 'header'
+    div className: 'header__placeholder'
+      h1 className: 'placeholder__text' innerText: 'Nova'
+      button id: 'hello' innerText: 'hiho'
+`, 2)
+
+button.addEventListener('click', () => {
+  h1.addStyle('color', 'red');
+})
+  
   
   // const header = new Element('header', root, { className: 'header' });
   //   const header__div = new Element('div', header, { className: 'header__div' });
