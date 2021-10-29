@@ -10,6 +10,10 @@ class Generator {
     }
   }
 
+  get elements() {
+    return this.elementsArray;
+  }
+
   get tags() {
     return ["a","abbr","acronym","address","applet","area","article","aside","audio","b","base","basefont","bb","bdo","big","blockquote","body","br /","button","canvas","caption","center","cite","code","col","colgroup","command","datagrid","datalist","dd","del","details","dfn","dialog","dir","div","dl","dt","em","embed","eventsource","fieldset","figcaption","figure","font","footer","form","frame","frameset","h1", "h2", "h3", "h4", "h5", "h6","head","header","hgroup","hr /","html","i","iframe","img","input","ins","isindex","kbd","keygen","label","legend","li","link","map","mark","menu","meta","meter","nav","noframes","noscript","object","ol","optgroup","option","output","p","param","pre","progress","q","rp","rt","ruby","s","samp","script","section","select","small","source","span","strike","strong","style","sub","sup","table","tbody","td","textarea","tfoot","th","thead","time","title","tr","track","tt","u","ul","var","video","wbr"]
   }
@@ -57,7 +61,7 @@ class Generator {
       previousPriority = object.priority;
     })
     
-
+    this.elementsArray = elementsArray;
   }
 
   createTreeObjectFromTokens() {
@@ -187,32 +191,25 @@ class Generator {
     this.generateTokens(splitByNewLines);
     this.createTreeObjectFromTokens();
     this.generateElementsFromTree();
-    
+    return this.elementsArray;
   } 
 
 
 }
 
 const generator = new Generator()
-generator.createTree(`
-  div className: 'firstGrandParentDiv' id: 'hiho'
-    section id: 'five'
-      h1 innerText: 'hiho'
-      h2 innerText: 'jaja'
-    article
-      h2 innerText: 'aha'
-  div className: 'secondGrandParentDiv'
-    header
-      h2 innerText: 'Yoooo'
-  h1 className: 'grandParent'
-    div className: 'nested'
-      div className: 'evenMoreNested'
-        div className: 'evenEvenMoreNested'
+const [header, div, h1, button] = generator.createTree(`
+  header className: 'header'
+    div className: 'header__placeholder'
+      h1 className: 'placeholder__text' innerText: 'Nova'
+      button id: 'hello' innerText: 'hiho'
 `, 2)
 
+button.addEventListener('click', () => {
+  h1.addStyle('color', 'red');
+})
 
 // Tree creation from pseudo html input from generator below
-
 const exampleObj = [{
   tag: 'div',
   parent: 'NODE TO PARENT',
