@@ -40,9 +40,12 @@ class Generator {
       } else if (object.priority === previousPriority + 2) {
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
-      } else if (object.priority === previousPriority - 2) {
+      } else if (object.priority <= previousPriority - 2) {
         //Filter out everything that isn't grandparent
-        priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 4);
+        priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 2);
+        let parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
+        element = new Element(object.tag, parentObject.element, object.propertyObject);
+      } else if (object.priority === previousPriority) {
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
       }
