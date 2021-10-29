@@ -61,9 +61,7 @@ class Generator {
     const arrayOfLines = splitByNewLines.filter(elem => elem.length !== 0);
     const elementsToReturn = [];
     
-    let prevLineIndentation = 0
     arrayOfLines.forEach((line, lineNumber) => {
-      console.log(prevLineIndentation);
       const currentLineTokens = [];
       this.rules.typeExpected = true;
       let indentation = 0;
@@ -114,11 +112,7 @@ class Generator {
        *  The parent is always the type that has -2 spaces below current indentation
        *  
        */
-
-      // if (prevLineIndentation === 0) 
-      //   currentLineTokens.unshift({ parent: indentation })
-      
-      prevLineIndentation = indentation;
+      currentLineTokens.unshift({ indentation })
       this.tokens.push(currentLineTokens);
 
 
