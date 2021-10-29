@@ -2,6 +2,7 @@ class Generator {
   constructor() {
     this.tokens = [];
     this.treeObjectArray = [];
+    this.indentationRule = 2
     this.rules = {
       typeExpected: true,
       valueExpected: false,
@@ -36,11 +37,12 @@ class Generator {
       let element;
       if (object.priority === lowestIndentation) {
         element = new Element(object.tag, root, object.propertyObject);
+        priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 2);
        
-      } else if (object.priority === previousPriority + 2) {
+      } else if (object.priority === (previousPriority + 2)) {
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
-      } else if (object.priority <= previousPriority - 2) {
+      } else if (object.priority <= (previousPriority - 2)) {
         //Filter out everything that isn't grandparent
         priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 2);
         let parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
@@ -103,15 +105,15 @@ class Generator {
     }
 
     if (this.rules.valueExpected) {
-      // const lineType = currentLineTokens[0].type;
-      //   const testNode = document.createElement(lineType)
-      //   for (const elem in testNode) {
-      //     if (elem === currentToken)
-      //       returnType = 'token_property'
-      //   }
+      const lineType = currentLineTokens[0].type;
+        const testNode = document.createElement(lineType)
+        for (const elem in testNode) {
+          if (elem === currentToken)
+            returnType = 'token_property'
+        }
 
-      //   if (returnType !== 'token_property')
-      //     throw new Error(`Invalid property value ${currentToken} for ${lineType}`)
+        if (returnType !== 'token_property')
+          throw new Error(`Invalid property value ${currentToken} for ${lineType}`)
         return 'token_property';
     }
 
@@ -179,7 +181,8 @@ class Generator {
     })
   }
 
-  createTree(input) {
+  createTree(input, indentationRule = 2) {
+    this.indentationRule = indentationRule;
     const splitByNewLines = input.split('\n');
     this.generateTokens(splitByNewLines);
     this.createTreeObjectFromTokens();
@@ -192,14 +195,20 @@ class Generator {
 
 const generator = new Generator()
 generator.createTree(`
-  div className: 'hello'
-    section
-      h1
-      h2
+  div className: 'firstGrandParentDiv' id: 'hiho'
+    section id: 'five'
+      h1 innerText: 'hiho'
+      h2 innerText: 'jaja'
     article
-      h2
-  div
-`)
+      h2 innerText: 'aha'
+  div className: 'secondGrandParentDiv'
+    header
+      h2 innerText: 'Yoooo'
+  h1 className: 'grandParent'
+    div className: 'nested'
+      div className: 'evenMoreNested'
+        div className: 'evenEvenMoreNested'
+`, 2)
 
 
 // Tree creation from pseudo html input from generator below
