@@ -1,6 +1,7 @@
 class Generator {
   constructor() {
     this.tokens = [];
+    this.treeObjectArray = [];
     this.rules = {
       typeExpected: true,
       valueExpected: false,
@@ -12,6 +13,75 @@ class Generator {
     return ["a","abbr","acronym","address","applet","area","article","aside","audio","b","base","basefont","bb","bdo","big","blockquote","body","br /","button","canvas","caption","center","cite","code","col","colgroup","command","datagrid","datalist","dd","del","details","dfn","dialog","dir","div","dl","dt","em","embed","eventsource","fieldset","figcaption","figure","font","footer","form","frame","frameset","h1", "h2", "h3", "h4", "h5", "h6","head","header","hgroup","hr /","html","i","iframe","img","input","ins","isindex","kbd","keygen","label","legend","li","link","map","mark","menu","meta","meter","nav","noframes","noscript","object","ol","optgroup","option","output","p","param","pre","progress","q","rp","rt","ruby","s","samp","script","section","select","small","source","span","strike","strong","style","sub","sup","table","tbody","td","textarea","tfoot","th","thead","time","title","tr","track","tt","u","ul","var","video","wbr"]
   }
   
+  generateElementsFromTree() {
+    const root = document.getElementById('root');
+    const elementsArray = [];
+    let priorityArray = [];
+    let lowestIndentation = 0;
+    let previousPriority = null;
+    
+    this.treeObjectArray.forEach((object, index) => {
+      if (index === 0) 
+        lowestIndentation = object.priority
+      else
+        if (object.priority < lowestIndentation)
+          lowestIndentation = object.priority;
+    })
+/**
+ * Priority Array -
+ * You will keep a parent there until the priority subtracts back to same priority, 
+ * splice it from array
+ */
+    this.treeObjectArray.forEach((object) => {
+      let element;
+      if (object.priority === lowestIndentation) {
+        element = new Element(object.tag, root, object.propertyObject);
+       
+      } else if (object.priority === previousPriority + 2) {
+        const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
+        element = new Element(object.tag, parentObject.element, object.propertyObject);
+      } else if (object.priority === previousPriority - 2) {
+        //Filter out everything that isn't grandparent
+        priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 4);
+        const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
+        element = new Element(object.tag, parentObject.element, object.propertyObject);
+      }
+
+      elementsArray.push(element);
+      priorityArray.push({ element, priority: object.priority });
+      previousPriority = object.priority;
+    })
+    
+
+  }
+
+  createTreeObjectFromTokens() {
+    this.tokens.forEach((line, index) => {
+      const indentation = line[0].indentation;
+      const treeObject = {};
+      const propertyObject = {};
+      let tokenValue = false;
+      for (let tokenIndex = 0; tokenIndex < line.length; tokenIndex++) {
+        if (line[tokenIndex].type === 'token_tag') {
+          treeObject.tag = line[tokenIndex].token;
+          treeObject.priority = indentation;
+          continue;
+        } 
+
+        if (line[tokenIndex].type === 'token_property') {
+          propertyObject[line[tokenIndex].token] = line[tokenIndex + 1].token;
+          tokenIndex++;
+        }
+
+        //MAKE CHILDREN
+      }
+
+      treeObject.propertyObject = propertyObject;
+      this.treeObjectArray.push(treeObject);
+
+    })
+  }
+
   checkGrammar(currentToken, lineNumber, currentLineTokens) {
     /** Grammars
      * token_tag ex. div section form button
@@ -52,15 +122,8 @@ class Generator {
     return returnType;
   }
 
-  createElementsFromTokens() {
-
-  }
-
-  createTree(input) {
-    const splitByNewLines = input.split('\n');
-    const arrayOfLines = splitByNewLines.filter(elem => elem.length !== 0);
-    const elementsToReturn = [];
-    
+  generateTokens(inputArr) {
+    const arrayOfLines = inputArr.filter(elem => elem.length !== 0);
     arrayOfLines.forEach((line, lineNumber) => {
       const currentLineTokens = [];
       this.rules.typeExpected = true;
@@ -108,26 +171,28 @@ class Generator {
         }
       }
 
-      /** Rule for lineindentation
-       *  The parent is always the type that has -2 spaces below current indentation
-       *  
-       */
       currentLineTokens.unshift({ indentation })
       this.tokens.push(currentLineTokens);
-
-
     })
-    console.log(this.tokens);
-  
+  }
 
+  createTree(input) {
+    const splitByNewLines = input.split('\n');
+    this.generateTokens(splitByNewLines);
+    this.createTreeObjectFromTokens();
+    this.generateElementsFromTree();
+    
   } 
+
+
 }
 
 const generator = new Generator()
 generator.createTree(`
-  div
+  div className: 'hello'
     section
       h1
+      h2
     article
       h2
   div
@@ -137,35 +202,35 @@ generator.createTree(`
 // Tree creation from pseudo html input from generator below
 
 const exampleObj = [{
-  type: 'div',
+  tag: 'div',
   parent: 'NODE TO PARENT',
-  elementObject: { className: 'helloDiv' },
+  propertyObject: { className: 'helloDiv' },
   children: [
     {
-      type: 'section',
+      tag: 'section',
       parent: 'NODE TO PARENT',
-      elementObject: {},
+      propertyObject: {},
       children: [
         { type: 'h1',
           parent: 'NODE TO PARENT',
-          elementObject: { className: 'helo', innerText: 'hejsan' },
+          propertyObject: { className: 'helo', innerText: 'hejsan' },
           children: {}
         }
       ]
     },
     {
-      type: 'article',
+      tag: 'article',
       parent: 'NODE TO PARENT',
-      elementObject: {},
+      propertyObject: {},
       children: {}
     }
   ],
 
 },
 {
-  type: 'div',
+  tag: 'div',
   parent: 'NODE TO PARENT',
-  elementObject: {},
+  propertyObject: {},
   children: [{
     type: 'div',
     parent: 'NODE TO PARENT',
