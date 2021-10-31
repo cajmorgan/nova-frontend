@@ -3,7 +3,7 @@ class Generator {
     this.tokens = [];
     this.treeObjectArray = [];
     this.indentationRule = 2
-    this.endToken = '\0'
+    this.endToken = 'end'
     this.rules = {
       typeExpected: true,
       valueExpected: false,
@@ -44,7 +44,6 @@ class Generator {
       if (object.priority === lowestIndentation) {
         element = new Element(object.tag, root, object.propertyObject);
         priorityArray = priorityArray.filter(elem => elem.priority <= object.priority - 2);
-       
       } else if (object.priority === (previousPriority + 2)) {
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
@@ -54,6 +53,7 @@ class Generator {
         let parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
       } else if (object.priority === previousPriority) {
+        /* Removing previous priority so it doesn't interfere with paternity*/
         priorityArray.splice(iterations - 1, 1);
         iterations--;
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);

@@ -5,18 +5,14 @@ function createHeader() {
   // 
 
   const generator = new Generator()
-    const [header, div, h1, button] = generator.createTree(`
+    const [header, div, h1] = generator.createTree(`
+    header
       div
-        h2
-        h3
-        h5
-        section
-          article
-            h1
-        div
-          div
-            div
-    \0`)
+        h1 innerText: 'yoyo'
+      section id: 'cool'
+        h2 innerText: 'section'
+    end`)
+
 
 // button.addEventListener('click', () => {
 //   h1.addStyle('color', 'red');
