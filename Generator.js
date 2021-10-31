@@ -3,6 +3,7 @@ class Generator {
     this.tokens = [];
     this.treeObjectArray = [];
     this.indentationRule = 2
+    this.endToken = '\0'
     this.rules = {
       typeExpected: true,
       valueExpected: false,
@@ -36,7 +37,8 @@ class Generator {
  * Priority Array -
  * You will keep a parent there until the priority subtracts back to same priority, 
  * splice it from array
- */
+ */ 
+    let iterations = 0;
     this.treeObjectArray.forEach((object) => {
       let element;
       if (object.priority === lowestIndentation) {
@@ -52,10 +54,13 @@ class Generator {
         let parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
       } else if (object.priority === previousPriority) {
+        priorityArray.splice(iterations - 1, 1);
+        iterations--;
         const parentObject = priorityArray.find(elem => elem.priority === object.priority - 2);
         element = new Element(object.tag, parentObject.element, object.propertyObject);
       }
 
+      iterations++;
       elementsArray.push(element);
       priorityArray.push({ element, priority: object.priority });
       previousPriority = object.priority;
@@ -81,8 +86,6 @@ class Generator {
           propertyObject[line[tokenIndex].token] = line[tokenIndex + 1].token;
           tokenIndex++;
         }
-
-        //MAKE CHILDREN
       }
 
       treeObject.propertyObject = propertyObject;
@@ -103,7 +106,10 @@ class Generator {
     if (this.rules.typeExpected) {
       if (tags.includes(currentToken)) {
         returnType = 'token_tag';
+      } else if (currentToken === this.endToken) {
+        return 0;
       } else {
+        console.table(currentToken);
         throw new Error(`Invalid type, check if applied HTML tag on line ${lineNumber + 1} is valid. To see available tags, console.log(generator.tags)`)
       }
     }
@@ -160,7 +166,7 @@ class Generator {
           //Validate token
           const type = this.checkGrammar(currentToken, lineNumber, currentLineTokens)
 
-          if (this.rules.typeExpected && type !== 'token_tag') 
+          if (this.rules.typeExpected && type !== 'token_tag' && currentToken !== this.endToken) 
             throw new Error("type expected as first token! ex. div");
           this.rules.typeExpected = false;
 
