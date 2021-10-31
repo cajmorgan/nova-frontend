@@ -115,10 +115,10 @@ class Generator {
     }
 
     if (this.rules.valueExpected) {
-      const lineType = currentLineTokens[0].type;
+      const lineType = currentLineTokens[0].token;
         const testNode = document.createElement(lineType)
         for (const elem in testNode) {
-          if (elem === currentToken)
+          if (elem == currentToken)
             returnType = 'token_property'
         }
 
