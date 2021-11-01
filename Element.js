@@ -12,8 +12,9 @@ class Element {
     this.#parent = parent.node ? parent.node : parent;
     this.#node = null;
     this.#elementObject = elementObject;
-    this.#removed = false;
+    this.#removed = true;
     this.#init = init
+    this.#createNode();
     this.#checkInit();
   }
   
@@ -47,7 +48,7 @@ class Element {
 
   #checkInit() {
     if (this.#init) {
-      this.#createNode();
+      this.addNode();
     } 
   }
 
@@ -66,9 +67,7 @@ class Element {
     this.#validateProps(this.#elementObject);
     for (const prop in this.#elementObject) {
       this.#node[prop] = this.#elementObject[prop];
-    }
-    
-    this.#parent.appendChild(newNode);
+    }    
   }
 
   #generateOptions() {

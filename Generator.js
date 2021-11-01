@@ -149,8 +149,8 @@ class Generator {
 
       //Rule: Value Expected -- If ':' is found, next grammarcheck type needs to be 'value' else throw error
       let currentToken = '';
+      let lastChar = ''
       for (let lineIndex = indentation; lineIndex <= line.length; lineIndex++) {
-        let lastChar = ''
         if ((line[lineIndex] !== ' ' && lineIndex !== line.length) && line[lineIndex]) {
           if (this.rules.valueExpected && line[lineIndex] !== '\'') 
             throw new Error('Missing \' after :');         
@@ -160,6 +160,9 @@ class Generator {
             continue;
           }
 
+          currentToken += line[lineIndex];
+          lastChar = line[lineIndex];
+        } else if (this.rules.checkNextTypeIsValue && lastChar !== '\'') {
           currentToken += line[lineIndex];
           lastChar = line[lineIndex];
         } else {

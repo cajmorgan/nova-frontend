@@ -9,6 +9,20 @@ class Component {
     return this.#arrayOfElements;
   }
 
-  
+  // retrieveElement() {
+
+  // }
+
+  render() {
+    this.#arrayOfElements.forEach(element => {
+      element.addNode();
+    })
+  }
+
+  unrender() {
+    this.#arrayOfElements.forEach(element => {
+      element.removeNode();
+    })
+  }
 
 }

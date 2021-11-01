@@ -4,15 +4,26 @@ function createHeader() {
   //   console.log(tag);
   // 
 
+  // const button = new Element('button', root, { innerText: 'button' }, true)
+
   const generator = new Generator()
   //returns component? 
   const component = generator.createTree(`
-    div className: 'div'
+    div className: 'hello'
       div id: 'yo'
-      div
+      button innerText: 'click me'
     end`)
 
-  console.log(component.elements)
+  component.render();
+
+  component.elements[2].addEventListener('click', () => {
+    component.unrender();
+    setTimeout(() => {
+      component.render();
+    }, 500)
+  })
+  
+  // console.log(component.elements)
 // button.addEventListener('click', () => {
 //   h1.addStyle('color', 'red');
 // })
