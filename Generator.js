@@ -197,7 +197,8 @@ class Generator {
     this.generateTokens(splitByNewLines);
     this.createTreeObjectFromTokens();
     this.generateElementsFromTree();
-    return this.elementsArray;
+    this.elementsArray.pop();
+    return new Component(this.elementsArray)
   } 
 }
 

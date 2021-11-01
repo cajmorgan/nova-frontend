@@ -5,14 +5,16 @@ class Element {
   #node;
   #elementObject;
   #removed;
+  #init
 
-  constructor(type, parent, elementObject) {
+  constructor(type, parent, elementObject, init) {
     this.#type = type;
     this.#parent = parent.node ? parent.node : parent;
     this.#node = null;
     this.#elementObject = elementObject;
-    this.#createNode();
     this.#removed = false;
+    this.#init = init
+    this.#checkInit();
   }
   
   get node() {
@@ -41,6 +43,12 @@ class Element {
 
   get children() {
     return this.node.children;
+  }
+
+  #checkInit() {
+    if (this.#init) {
+      this.#createNode();
+    } 
   }
 
   #validateProps(elementObject) {
