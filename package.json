@@ -1,0 +1,28 @@
+{
+  "name": "nova",
+  "version": "1.0.0",
+  "description": "nova",
+  "main": "nova.js",
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cajmorgan/class-based-frontend-framwork.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cajmorgan/class-based-frontend-framwork/issues"
+  },
+  "homepage": "https://github.com/cajmorgan/class-based-frontend-framwork#readme",
+  "dependencies": {
+    "webpack": "^5.61.0",
+    "webpack-dev-server": "^4.4.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.9.1"
+  }
+}

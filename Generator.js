@@ -1,3 +1,5 @@
+import { Component, Element } from './nova';
+
 class Generator {
   constructor() {
     this.tokens = [];
@@ -221,5 +223,4 @@ class Generator {
 
 }
 
-
-
+export default Generator

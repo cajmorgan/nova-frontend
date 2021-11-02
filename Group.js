@@ -5,6 +5,10 @@ class Group {
     this.#arrayOfComponents = arrayOfComponents;
   }
 
+  get components() {
+    return this.#arrayOfComponents
+  }
+
   render() {
     this.#arrayOfComponents.forEach(comp => {
       comp.render();
@@ -18,3 +22,5 @@ class Group {
   }
 
 }
+
+export default Group

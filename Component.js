@@ -9,7 +9,7 @@ class Component {
     return this.#arrayOfElements;
   }
 
-  setVariables(stateObject) {
+  setProps(stateObject) {
     for (const key in stateObject) {
       const toFind = `{{${key}}}`;
       this.#arrayOfElements.forEach(elem => {
@@ -57,3 +57,5 @@ class Component {
   }
 
 }
+
+export default Component
