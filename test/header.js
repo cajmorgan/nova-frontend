@@ -10,16 +10,11 @@ const header = generator.createTree(`
         li  innerText: 'hiho'
   end`)
 
-  
-
-  // header.retrieve('li').forEach(elem => {
-  //   elem.addEventListener('click', () => {
-  //     const text = elem.text;
-  //     elem.updateNode({ innerText: 'Clicked!' });
-  //     setTimeout(() => {
-  //       elem.updateNode({ innerText: text });
-  //     }, 500);
-  //   })
-  // })
+  header.retrieve('li').forEach(elem => {
+    elem.addEventListener('click', () => {
+      const text = elem.text;
+      elem.updateNode({ innerText: 'Clicked!' });
+    })
+  })
 
 export default header;

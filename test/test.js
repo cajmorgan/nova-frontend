@@ -6,8 +6,11 @@ new Router('/', [header]);
 new Router('/things', [header, things]);
 const button = new Element('button', root, { innerText: 'Go To Things' }, true);
 button.addEventListener('click', () => {
-  if (window.location.pathname === '/')
-    window.location.href = '/things';
+  if (Router.getPath() === '/')
+    Router.changePath('/things')
+  else {
+    Router.changePath('/')
+  }
 })
 
 
