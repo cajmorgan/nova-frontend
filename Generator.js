@@ -201,8 +201,24 @@ class Generator {
     this.createTreeObjectFromTokens();
     this.generateElementsFromTree();
     this.elementsArray.pop();
-    return new Component(this.elementsArray)
+    const elementsArray = [...this.elementsArray]
+    this.defaultGenerator()
+    return new Component(elementsArray)
   } 
+
+  defaultGenerator() {
+    this.tokens = [];
+    this.treeObjectArray = [];
+    this.indentationRule = 2
+    this.endToken = 'end'
+    this.rules = {
+      typeExpected: true,
+      valueExpected: false,
+      checkNextTypeIsValue: false
+    }
+    this.elementsArray = [];
+  }
+
 }
 
 

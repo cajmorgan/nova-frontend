@@ -22,6 +22,10 @@ class Element {
     return this.#node;
   }
 
+  get type() {
+    return this.#type;
+  }
+
   get parent() {
     return this.#parent;
   }

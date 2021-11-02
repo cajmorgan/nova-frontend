@@ -9,7 +9,20 @@ class Component {
     return this.#arrayOfElements;
   }
 
-  retrieveElement(input) {
+  setVariables(stateObject) {
+    for (const key in stateObject) {
+      const toFind = `{{${key}}}`;
+      this.#arrayOfElements.forEach(elem => {
+        for (const prop in elem.node) {
+          if (elem.node[prop] === toFind) {
+            elem.node[prop] = stateObject[key];
+          }
+        }
+      })
+    }
+  }
+
+  retrieve(input) {
     let retrievedElements = [];
     if(input[0] === '#') {
       retrievedElements = this.#arrayOfElements
@@ -17,6 +30,12 @@ class Component {
     } else if (input[0] === '.') {
       this.#arrayOfElements.forEach(element => {
         if (element.node.className === input.replace('.', '')) {
+          retrievedElements.push(element);
+        }
+      })
+    } else {
+      this.#arrayOfElements.forEach(element => {
+        if (element.type === input) {
           retrievedElements.push(element);
         }
       })
