@@ -36,5 +36,4 @@ search.retrieve('#submit-btn')
     gallery.render();
   })
 
-
 export default search;

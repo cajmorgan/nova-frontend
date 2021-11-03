@@ -16,7 +16,7 @@ async function createGallery(dataPromise) {
     images.push(image);
   })
   
-  const wrapper = new Element('article', root, { className: 'gallery-wrapper' });
+  const wrapper = new Element('section', root, { className: 'gallery-wrapper' });
   const gallery = new Group(images, wrapper);
   return gallery;
 }
