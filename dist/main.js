@@ -66,7 +66,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nclass Router {\n  #path\n  #componentArray\n  #hash\n  #rendered\n\n  constructor(path, componentArray, hash) {\n    this.#path = path;\n    this.#componentArray = componentArray;\n    this.#hash = hash;\n    this.#rendered = false;\n    this.#checkPath();\n  }\n\n  get path() {\n    return this.#path\n  }\n\n  set path(newPath) {\n    this.#path = newPath;\n  }\n\n  #checkPath() {\n    if (this.#hash) {\n      this.#addChangeListener();\n    } else if (this.path === window.location.pathname)\n        this.#render();\n  }\n\n  #render() {\n    this.#componentArray.forEach(comp => comp.render());\n    this.#rendered = true;\n  }\n\n  #unrender() {\n    this.#componentArray.forEach(comp => comp.unrender());\n    this.#rendered = false;\n  }\n\n  static changePath(newPath) {\n    window.location.href = newPath;\n  }\n\n  static changeHash() {\n    window.dispatchEvent(new Event('locationChange'));\n  }\n\n  #addChangeListener() {\n    window.addEventListener('locationChange', () => {\n      const url = window.location.hash;\n      if (url === this.#path.replace('/', '') && !this.#rendered) {\n        this.#render();\n      } else if (this.#rendered) {\n        this.#unrender();\n      }\n    })\n  }\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Router);\n\n//# sourceURL=webpack://nova/./lib/Router.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nclass Router {\n  #path\n  #componentArray\n  #hash\n  #rendered\n\n  constructor(path, componentArray, hash) {\n    this.#path = path;\n    this.#componentArray = componentArray;\n    this.#hash = hash;\n    this.#rendered = false;\n    this.#checkPath();\n  }\n\n  get path() {\n    return this.#path\n  }\n\n  set path(newPath) {\n    this.#path = newPath;\n  }\n\n  #checkPath() {\n    if (this.#hash) {\n      this.#addChangeListener();\n    } else if (this.path === window.location.pathname)\n        this.#render();\n  }\n\n  #render() {\n    this.#componentArray.forEach(comp => comp.render());\n    this.#rendered = true;\n  }\n\n  #unrender() {\n    this.#componentArray.forEach(comp => comp.unrender());\n    this.#rendered = false;\n  }\n\n  static getPath() {\n    return window.location.pathname;\n  }\n\n  static changePath(newPath) {\n    window.location.href = newPath;\n  }\n\n  static changeHash() {\n    window.dispatchEvent(new Event('locationChange'));\n  }\n\n  #addChangeListener() {\n    window.addEventListener('locationChange', () => {\n      const url = window.location.hash;\n      if (url === this.#path.replace('/', '') && !this.#rendered) {\n        this.#render();\n      } else if (this.#rendered) {\n        this.#unrender();\n      }\n    })\n  }\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Router);\n\n//# sourceURL=webpack://nova/./lib/Router.js?");
 
 /***/ }),
 
@@ -80,33 +80,33 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./test/header.js":
-/*!************************!*\
-  !*** ./test/header.js ***!
-  \************************/
+/***/ "./test/App.js":
+/*!*********************!*\
+  !*** ./test/App.js ***!
+  \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator()\nconst header = generator.createTree(`\n  header className: 'header'\n    nav\n      ul\n        li  innerText: 'hello Sir' className: 'hoho'\n        li  innerText: 'good Day Sir'\n        li  innerText: 'hiho'\n  end`)\n\n  \n\n  // header.retrieve('li').forEach(elem => {\n  //   elem.addEventListener('click', () => {\n  //     const text = elem.text;\n  //     elem.updateNode({ innerText: 'Clicked!' });\n  //     setTimeout(() => {\n  //       elem.updateNode({ innerText: text });\n  //     }, 500);\n  //   })\n  // })\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (header);\n\n//# sourceURL=webpack://nova/./test/header.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Search */ \"./test/Search.js\");\n\n\n\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/', [_Search__WEBPACK_IMPORTED_MODULE_1__[\"default\"]])\n\n\n//# sourceURL=webpack://nova/./test/App.js?");
 
 /***/ }),
 
-/***/ "./test/test.js":
-/*!**********************!*\
-  !*** ./test/test.js ***!
-  \**********************/
+/***/ "./test/Gallery.js":
+/*!*************************!*\
+  !*** ./test/Gallery.js ***!
+  \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _header_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.js */ \"./test/header.js\");\n/* harmony import */ var _things__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./things */ \"./test/things.js\");\n\n\n\n\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/', [_header_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]]);\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/things', [_header_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"], _things__WEBPACK_IMPORTED_MODULE_2__[\"default\"]]);\nconst button = new _index__WEBPACK_IMPORTED_MODULE_0__.Element('button', _index__WEBPACK_IMPORTED_MODULE_0__.root, { innerText: 'Go To Things' }, true);\nbutton.addEventListener('click', () => {\n  if (window.location.pathname === '/')\n    _index__WEBPACK_IMPORTED_MODULE_0__.Router.changePath('/things')\n  else {\n    _index__WEBPACK_IMPORTED_MODULE_0__.Router.changePath('/')\n  }\n})\n\n\n// header.render();\n\n// const imageBuild = `\n//   h1 innerText: '{{title}}'\n//   h2 innerText: '{{sub}}'\n//   div\n//     p innerText: '{{subsub}}'\n//   end` \n\n// const imageOne = generator.createTree(imageBuild)\n// const imageTwo = generator.createTree(imageBuild)\n// const imageThree = generator.createTree(imageBuild)\n// imageOne.setProps({ title: 'helo', sub: 'yo', subsub: 'hiho' })\n// imageTwo.setProps({ title: 'helo2', sub: 'yo2', subsub: 'haho' })\n// imageThree.setProps({ title: 'helo3', sub: 'yo3', subsub: 'haha' })\n\n// const images = new Group([imageOne, imageTwo, imageThree])\n\n// images.render();\n// const frontPage = new Router('/', [header, images]);\n// const secondage = new Router('/head', [images]);\n// const thirdage = new Router('/hiho', [header]);\n\n// imageOne.retrieve('h1')[0].addStyle('color', 'red');\n\n\n\n//# sourceURL=webpack://nova/./test/test.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nasync function createGallery(dataPromise) {\n  const imageBuild = `\n  div\n    p innerText: '{{title}}'\n    img src: '{{hiho}}'\n  end`\n  \n  const images = [];\n  const generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\n  const data = await dataPromise;\n  data.forEach(imageInfo => {\n    const image = generator.createTree(imageBuild);\n    image.setProps({ title: imageInfo.artist, hiho: imageInfo.url });\n    images.push(image);\n  })\n \n  const gallery = new _index__WEBPACK_IMPORTED_MODULE_0__.Group(images);\n  return gallery;\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createGallery);\n\n//# sourceURL=webpack://nova/./test/Gallery.js?");
 
 /***/ }),
 
-/***/ "./test/things.js":
+/***/ "./test/Search.js":
 /*!************************!*\
-  !*** ./test/things.js ***!
+  !*** ./test/Search.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nconst build = `\n  div id: '{{buildId}}'\n    h1 innerText: '{{title}}'\n  end`\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\nconst thingOne = generator.createTree(build)\nconst thingTwo = generator.createTree(build)\nconst thingThree = generator.createTree(build)\n\nconst things = [thingOne, thingTwo, thingThree];\n\nthings.forEach((thing, index) => {\n  thing.setProps({ buildId: `thing${index}`, title: `hello${index}`});\n})\n\nconst thingGroup = new _index__WEBPACK_IMPORTED_MODULE_0__.Group(things);\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (thingGroup);\n\n//# sourceURL=webpack://nova/./test/things.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _Gallery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gallery */ \"./test/Gallery.js\");\n\n\n\nconst fetchData = async (input) => {\n  const res = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${input}`, { headers: { Authorization: \"Client-ID gHo75RTRrKxBFHgmuKFJfkTQJDI8YfoszFyse8ovX9s\" } });\n    const searchData = await res.json();\n    const imageResults = searchData.results.map((image) => {\n      return {\n        artist: image.user.name,\n        description: image.description,\n        url: image.urls.small\n      }\n    });\n  \n  return imageResults;\n}\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator()\nconst search = generator.createTree(`\n  section className: 'search-container'\n    form className: 'search-form'\n      label\n        input type: 'text' className: 'search-form__input'\n      input type: 'submit' className: 'search-form__submit'\n  end`)\n\nsearch.retrieve('.search-form__submit')[0]\n  .addEventListener('click', async (e) => {\n    e.preventDefault();\n    const input = search.retrieve('.search-form__input')[0].value\n    const data = fetchData(input);\n    const gallery = await (0,_Gallery__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(data);\n    gallery.render();\n  })\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (search);\n\n//# sourceURL=webpack://nova/./test/Search.js?");
 
 /***/ })
 
@@ -170,7 +170,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./test/test.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./test/App.js");
 /******/ 	
 /******/ })()
 ;
