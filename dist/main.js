@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nclass Component {\n  #arrayOfElements;\n  #parent\n\n  constructor(arrayOfElements) {\n    this.#arrayOfElements = arrayOfElements;\n    this.#parent;\n  }\n\n  get elements() {\n    return this.#arrayOfElements;\n  }\n\n  setProps(stateObject) {\n    for (const key in stateObject) {\n      const toFind = `{{${key}}}`;\n      this.#arrayOfElements.forEach(elem => {\n        for (const prop in elem.node) {\n          if (elem.node[prop] === toFind) {\n            elem.node[prop] = stateObject[key];\n          }\n        }\n      })\n    }\n  }\n\n  retrieve(input) {\n    let retrievedElements = [];\n    if(input[0] === '#') {\n      retrievedElements = this.#arrayOfElements\n        .find(element => element.node.id === input.replace('#', ''));\n    } else if (input[0] === '.') {\n      this.#arrayOfElements.forEach(element => {\n        if (element.node.className === input.replace('.', '')) {\n          retrievedElements.push(element);\n        }\n      })\n    } else {\n      this.#arrayOfElements.forEach(element => {\n        if (element.type === input) {\n          retrievedElements.push(element);\n        }\n      })\n    }\n\n    return retrievedElements;\n  }\n\n  changeParent(newParent) {\n    this.#parent = newParent\n    this.#arrayOfElements[0].changeParent(newParent.node);\n  }\n\n  render() {\n    if(this.#parent)\n      this.#parent.addNode();\n    \n    this.#arrayOfElements.forEach(element => {\n      element.addNode();\n    })\n  }\n\n  unrender() {\n    this.#arrayOfElements.forEach(element => {\n      element.removeNode();\n    })\n  }\n\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Component);\n\n\n//# sourceURL=webpack://nova/./lib/Component.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nclass Component {\n  #arrayOfElements;\n  #parent\n\n  constructor(arrayOfElements) {\n    this.#arrayOfElements = arrayOfElements;\n    this.#parent;\n  }\n\n  get elements() {\n    return this.#arrayOfElements;\n  }\n\n  setProps(stateObject) {\n    for (const key in stateObject) {\n      const toFind = `{{${key}}}`;\n      this.#arrayOfElements.forEach(elem => {\n        for (const prop in elem.node) {\n          if (elem.node[prop] === toFind) {\n            elem.node[prop] = stateObject[key];\n          }\n        }\n      })\n    }\n  }\n\n  retrieve(input) {\n    let retrievedElements = [];\n    if(input[0] === '#') {\n      retrievedElements = this.#arrayOfElements\n        .find(element => element.node.id === input.replace('#', ''));\n    } else if (input[0] === '.') {\n      this.#arrayOfElements.forEach(element => {\n        if (element.node.className === input.replace('.', '')) {\n          retrievedElements.push(element);\n        }\n      })\n    } else {\n      this.#arrayOfElements.forEach(element => {\n        if (element.type === input) {\n          retrievedElements.push(element);\n        }\n      })\n    }\n\n    return retrievedElements;\n  }\n\n  changeParent(newParent) {\n    this.#parent = newParent\n    this.#arrayOfElements[0].changeParent(newParent.node);\n  }\n\n  render() {\n    if(this.#parent)\n      this.#parent.addNode();\n    \n    this.#arrayOfElements.forEach(element => {\n      element.addNode();\n    })\n  }\n\n  unrender() {\n    this.#arrayOfElements.forEach(element => {\n      element.removeNode();\n    })\n  }\n\n  delete(index) {\n    this.#arrayOfElements.splice(index, 1);\n  }\n\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Component);\n\n\n//# sourceURL=webpack://nova/./lib/Component.js?");
 
 /***/ }),
 
@@ -80,33 +80,53 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./test/App.js":
+/***/ "./test/app.js":
 /*!*********************!*\
-  !*** ./test/App.js ***!
+  !*** ./test/app.js ***!
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Search */ \"./test/Search.js\");\n\n\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\nconst pageTwo = generator.createTree(`\n  h1 innerText: 'PaggesssTwo'\nend`)\n\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/', [_Search__WEBPACK_IMPORTED_MODULE_1__[\"default\"]])\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/two', [pageTwo])\n\n\n//# sourceURL=webpack://nova/./test/App.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header */ \"./test/header.js\");\n/* harmony import */ var _search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./search */ \"./test/search.js\");\n\n\n\n\n\nnew _index__WEBPACK_IMPORTED_MODULE_0__.Router('/', [_search__WEBPACK_IMPORTED_MODULE_2__.search])\n\n//# sourceURL=webpack://nova/./test/app.js?");
 
 /***/ }),
 
-/***/ "./test/Gallery.js":
+/***/ "./test/gallery.js":
 /*!*************************!*\
-  !*** ./test/Gallery.js ***!
+  !*** ./test/gallery.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nasync function createGallery(dataPromise) {\n  const imageBuild = `\n  div className: 'gallery__image'\n    p innerText: '{{title}}'\n    img srcset: '{{url}}'\n  end`\n  \n  const images = [];\n  const generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\n  const data = await dataPromise;\n  data.forEach(imageInfo => {\n    const image = generator.createTree(imageBuild);\n    image.setProps({ title: imageInfo.artist, url: imageInfo.url });\n    images.push(image);\n  })\n  \n  const wrapper = new _index__WEBPACK_IMPORTED_MODULE_0__.Element('section', _index__WEBPACK_IMPORTED_MODULE_0__.root, { className: 'gallery-wrapper' });\n  const gallery = new _index__WEBPACK_IMPORTED_MODULE_0__.Group(images, wrapper);\n  return gallery;\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createGallery);\n\n//# sourceURL=webpack://nova/./test/Gallery.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nasync function createGallery(dataPromise) {\n  const imageBuild = `\n  div className: 'gallery__image'\n    p innerText: '{{title}}'\n    img srcset: '{{url}}'\n  end`\n  \n  const images = [];\n  const generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\n  const data = await dataPromise;\n  data.forEach(imageInfo => {\n    const image = generator.createTree(imageBuild);\n    image.setProps({ title: imageInfo.artist, url: imageInfo.url });\n    images.push(image);\n  })\n  \n  const wrapper = new _index__WEBPACK_IMPORTED_MODULE_0__.Element('section', _index__WEBPACK_IMPORTED_MODULE_0__.root, { className: 'gallery-wrapper' });\n  const gallery = new _index__WEBPACK_IMPORTED_MODULE_0__.Group(images, wrapper);\n  return gallery;\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createGallery);\n\n//# sourceURL=webpack://nova/./test/gallery.js?");
 
 /***/ }),
 
-/***/ "./test/Search.js":
+/***/ "./test/header.js":
 /*!************************!*\
-  !*** ./test/Search.js ***!
+  !*** ./test/header.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _Gallery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gallery */ \"./test/Gallery.js\");\n\n\n\nconst fetchData = async (input) => {\n  const res = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${input}`, { headers: { Authorization: \"Client-ID gHo75RTRrKxBFHgmuKFJfkTQJDI8YfoszFyse8ovX9s\" } });\n    const searchData = await res.json();\n    const imageResults = searchData.results.map((image) => {\n      return {\n        artist: image.user.name,\n        description: image.description,\n        url: image.urls.small\n      }\n    });\n  \n  return imageResults;\n}\n\nlet gallery = '';\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator()\nconst search = generator.createTree(`\n  section className: 'search-container'\n    form className: 'search-form'\n      label\n        input type: 'text' className: 'search-form__input'\n      input type: 'submit' className: 'search-form__submit' id: 'submit-btn'\n  end`)\n\nsearch.retrieve('#submit-btn')\n  .addEventListener('click', async (e) => {\n    e.preventDefault();\n    const input = search.retrieve('.search-form__input')[0].value\n    const data = fetchData(input);\n    if (gallery) gallery.unrender();\n    gallery = await (0,_Gallery__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(data);\n    gallery.render();\n  })\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (search);\n\n//# sourceURL=webpack://nova/./test/Search.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\n\nconst header = generator.createTree(`\n  header\n    h1 className: 'header__title' innerText: 'Image Gallery'\n    h2 className: 'header__sub' innerText: 'Just search!'\n  end`)\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (header);\n\n\n//# sourceURL=webpack://nova/./test/header.js?");
+
+/***/ }),
+
+/***/ "./test/pagination.js":
+/*!****************************!*\
+  !*** ./test/pagination.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n\n\nlet pageNum = 1;\n\nfunction createPagination(total_pages, makeSearch) {\n  const generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator();\n  const pagination = generator.createTree(`\n    div className: 'pagination'\n      button id: 'prev' innerText: 'prev'\n      button id: 'next' innerText: 'next'\n  end`)\n \n  if (pageNum === 1 || total_pages <= 1) {\n    pagination.delete(1);\n    if (!total_pages)\n      pagination.delete(1);\n  }\n\n\n  if (pageNum === total_pages) {\n    pagination.delete(2);\n  }\n\n  for (let i = 1; i < pagination.elements.length; i++) {\n    pagination.elements[i].addEventListener('click', async (e) => {\n\n      if(e.target.id === 'prev') {\n        pageNum--\n      } else if (e.target.id === 'next') {\n        pageNum++\n      }\n      \n      makeSearch('', pageNum);\n    })\n  }\n  \n  \n  return pagination;\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createPagination);\n\n//# sourceURL=webpack://nova/./test/pagination.js?");
+
+/***/ }),
+
+/***/ "./test/search.js":
+/*!************************!*\
+  !*** ./test/search.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"search\": () => (/* binding */ search),\n/* harmony export */   \"makeSearch\": () => (/* binding */ makeSearch)\n/* harmony export */ });\n/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ \"./index.js\");\n/* harmony import */ var _gallery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery */ \"./test/gallery.js\");\n/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ \"./test/pagination.js\");\n\n\n\n\nconst fetchData = async (input, pageNum) => {\n  const res = await fetch(`https://api.unsplash.com/search/photos?page=${pageNum}&query=${input}`, { headers: { Authorization: \"Client-ID gHo75RTRrKxBFHgmuKFJfkTQJDI8YfoszFyse8ovX9s\" } });\n    const searchData = await res.json();\n    const imageResults = searchData.results.map((image) => {\n      return {\n        artist: image.user.name,\n        description: image.description,\n        url: image.urls.small,\n      }\n    });\n\n  return [imageResults, searchData.total_pages];\n}\n\nconst state = {};\n\nconst generator = new _index__WEBPACK_IMPORTED_MODULE_0__.Generator()\nconst search = generator.createTree(`\n  section className: 'search-container'\n    form className: 'search-form'\n      label\n        input type: 'text' className: 'search-form__input' id: 'form-input'\n      input type: 'submit' className: 'search-form__submit' id: 'submit-btn'\n  end`)\n\nasync function makeSearch(e, pageNum = 1) {\n  if (e)\n    e.preventDefault();\n  \n  const input = search.retrieve('#search-form__input').value\n  const [data, totalPages] = await fetchData(input, pageNum);\n  if (state.gallery) { \n    state.gallery.unrender();\n    state.pagination.unrender();\n  }\n\n  state.gallery = await (0,_gallery__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(data);\n  state.pagination = await (0,_pagination__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(totalPages, makeSearch);\n\n  new _index__WEBPACK_IMPORTED_MODULE_0__.Group([state.pagination, state.gallery]).render();\n}\n\nsearch.retrieve('#submit-btn').addEventListener('click', makeSearch)\n\n\n\n//# sourceURL=webpack://nova/./test/search.js?");
 
 /***/ })
 
@@ -170,7 +190,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./test/App.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./test/app.js");
 /******/ 	
 /******/ })()
 ;
