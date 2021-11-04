@@ -30,7 +30,6 @@ function createPagination(total_pages, makeSearch) {
     })
   }
   
-
   return pagination;
 }
 
