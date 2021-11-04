@@ -1,4 +1,6 @@
-import { Generator } from '../index';
+import { Element, Generator, Group, root } from '../index';
+
+const paginationWrapper = new Element('section', root, { className: 'pagination-wrapper' });
 
 let pageNum = 1;
 
@@ -30,7 +32,9 @@ function createPagination(total_pages, makeSearch) {
     })
   }
   
-  return pagination;
+  const paginationGroup = new Group([pagination], paginationWrapper)
+
+  return paginationGroup;
 }
 
-export default createPagination;
+export { createPagination, paginationWrapper };

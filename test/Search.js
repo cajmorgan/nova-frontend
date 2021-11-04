@@ -1,6 +1,6 @@
 import { Generator, root, Element, Group } from '../index';
-import createGallery from './Gallery'
-import createPagination from './pagination';
+import { createGallery } from './gallery'
+import { createPagination } from './pagination';
 
 const fetchData = async (input, pageNum) => {
   const res = await fetch(`https://api.unsplash.com/search/photos?page=${pageNum}&query=${input}`, { headers: { Authorization: "Client-ID gHo75RTRrKxBFHgmuKFJfkTQJDI8YfoszFyse8ovX9s" } });
@@ -27,9 +27,9 @@ const search = generator.createTree(`
       input type: 'submit' className: 'search-form__submit' id: 'submit-btn'
   end`)
 
+
 async function makeSearch(e, pageNum = 1) {
-  if (e)
-    e.preventDefault();
+  if (e) e.preventDefault();
   
   const input = search.retrieve('#form-input').value
   const [data, totalPages] = await fetchData(input, pageNum);

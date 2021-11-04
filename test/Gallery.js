@@ -1,5 +1,7 @@
 import { Generator, Group, Element, root } from '../index'
 
+const galleryWrapper = new Element('section', root, { className: 'gallery-wrapper' });
+
 async function createGallery(dataPromise) {
   const imageBuild = `
   div className: 'gallery__image'
@@ -16,9 +18,8 @@ async function createGallery(dataPromise) {
     images.push(image);
   })
   
-  const wrapper = new Element('section', root, { className: 'gallery-wrapper' });
-  const gallery = new Group(images, wrapper);
+  const gallery = new Group(images, galleryWrapper);
   return gallery;
 }
 
-export default createGallery
+export { galleryWrapper, createGallery}
