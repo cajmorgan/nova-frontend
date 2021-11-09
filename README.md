@@ -82,6 +82,11 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
   ```
   import { Element, root } from 'nova';
   const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+  h1.updateNode({ // Updates all specified properties
+    innerText: 'Yooo'
+    id: 'title'
+    className: 'h1'
+  })
 
   ```
 
