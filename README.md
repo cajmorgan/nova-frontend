@@ -23,7 +23,9 @@ Nova is built solely on classes which are a perfect fit to handle context by sto
 - State
 - Router
 
-#### Element(tag, parent, propertyObject, render);
+## API
+
+### Element(tag, parent, propertyObject, render);
 The fundamental building block in Nova is the Element, which most other things in the library are built upon. The element is just a shell of the normal javascript node but adds extra functionality and shorter syntax to access and manipulate a node. 
 
 The Element represent One node and are created as following: 
@@ -40,7 +42,21 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 <main id="root"></main>
 ```
 
-### Element API
+### Element Methods
+
+#### Element.addNode()
+  Appends the node to the parent if it's not already rendered, else throws an error.
+
+  return value
+    undefined
+
+
+### Element Getters
+
+#### Element.node
+  returns the node of the Element which you can use normal Javascript node methods on.
+
+### Element.type
 
 
 
