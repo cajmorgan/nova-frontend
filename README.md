@@ -36,7 +36,7 @@ The fundamental building block in Nova is the Element, which most other things i
 
 The Element represent One node and are created as following: 
 
-```
+```c
 import { Element, root } from 'nova';
 const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
 
@@ -44,7 +44,7 @@ const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
 
 First we import Element and root. *IMPORTANT* always have a parent root in your html file with the id of "root": 
 
-```
+```c
 <main id="root"></main>
 ```
 
@@ -53,7 +53,7 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 #### Element.addNode() [void]
   Appends the node to the parent if it's not already rendered, else throws an error.
 
-  ```
+  ```c
   const h1 = new Element('h1', root, { innerText: 'Hello World' });
   h1.addNode();
   ```
@@ -61,7 +61,7 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 ### Element.removeNode() [void]
   Removes the node from the parent, to add node again, you can call Element.addNode().
 
-  ```
+  ```c
   const h1 = new Element('h1', root, { innerText: 'Hello World' }, true); // Render set to true 
   h1.removeNode();
   ```
@@ -69,7 +69,7 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 ### Element.toggleNode() [void]
   Toggles between adding and removing the node from the parent. 
 
-  ``` 
+  ```c 
   const h1 = new Element('h1', root, { innerText: 'Hello World' });
   h1.toggleNode(); //on
   h1.toggleNode(); //off
