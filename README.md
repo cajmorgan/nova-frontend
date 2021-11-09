@@ -79,7 +79,7 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 ### Element.updateNode(elementObject) [void]
   This method takes an elementObject and updates the node accordingly. The element object uses the properties from the normal node, for example: className, innerText and id. You can only specify properties that exists for that specific html tag. 
 
-  ``
+  ```
   import { Element, root } from 'nova';
   const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
 
