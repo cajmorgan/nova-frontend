@@ -15,9 +15,7 @@ import { State, Element, root } from '../../index'
   };
 
   const state = new State(likesReducer, 'hello');
-  const incrementLikes = { type: 'INCREMENT' };
-  const doubleLikes = { type: 'DOUBLE' };
-  // const tripleLikes = { type: 'TRIPLE' };
+  state.createAction('incrementLikes', { type: 'INCREMENT' })
   
 
   const text = new Element('h1', root, { innerText: state.now }, true);
@@ -28,7 +26,7 @@ import { State, Element, root } from '../../index'
   state.subscribe(changeText);
 
   text.addEventListener('click', () => {
-    state.dispatch(incrementLikes);
+    state.dispatch(state.getAction('incrementLikes'));
   })
 
  
