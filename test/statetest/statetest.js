@@ -1,12 +1,10 @@
-import { State, Element, root } from '../../index'
+import { State, Element, Generator, root } from '../../index'
 
 (function() {
-  const likesReducer = (state = 0, action) => {
+  function worker (state, action) {
     switch (action.type) {
       case 'INCREMENT':
         return state + 'YOOOO';
-      case 'DOUBLE':
-        return state + 'hi';
       case 'TRIPLE':
         return (state % 2) ? state * 3 : state;
       default:
@@ -14,18 +12,29 @@ import { State, Element, root } from '../../index'
     }
   };
 
-  const state = new State(likesReducer, 'hello');
-  state.createAction('incrementLikes', { type: 'INCREMENT' })
-  
 
-  const text = new Element('h1', root, { innerText: state.now }, true);
+  // const workers = State.mergeWorkers(likesWorker, secondWorker);
+  const state = new State(worker, 'helo');
+  state.createAction('incrementLikes', { type: 'INCREMENT' })
+  state.createAction('doubleLikes', { type: 'DOUBLE' })
+
+  const generator = new Generator();
+  const text = generator.createTree(`
+    h1 innerText: 'helo'
+    h2 innerText: 'yo'
+  end`)
+
+  text.render()
+  // const text = new Element('h1', root, { innerText: state.getState().likesWorker }, true);
   const changeText = () => {
-    text.updateNode({ innerText: state.now });
+    text.elements.forEach(elem => {
+      elem.updateNode({ innerText: state.getState() });
+    })
   }
 
   state.subscribe(changeText);
 
-  text.addEventListener('click', () => {
+  text.elements[0].addEventListener('click', () => {
     state.dispatch(state.getAction('incrementLikes'));
   })
 
