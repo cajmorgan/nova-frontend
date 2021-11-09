@@ -23,6 +23,12 @@ Nova is built solely on classes which are a perfect fit to handle context by sto
 - State
 - Router
 
+
+GIVE EXAMPLES SHOW OFF. 
+
+
+
+
 ## API
 
 ### Element(tag, parent, propertyObject, render);
@@ -44,12 +50,40 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 
 ### Element Methods
 
-#### Element.addNode()
+#### Element.addNode() [void]
   Appends the node to the parent if it's not already rendered, else throws an error.
 
-  return value
-    undefined
+  ```
+  const h1 = new Element('h1', root, { innerText: 'Hello World' });
+  h1.addNode();
+  ```
 
+### Element.removeNode() [void]
+  Removes the node from the parent, to add node again, you can call Element.addNode().
+
+  ```
+  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true); // Render set to true 
+  h1.removeNode();
+  ```
+
+### Element.toggleNode() [void]
+  Toggles between adding and removing the node from the parent. 
+
+  ``` 
+  const h1 = new Element('h1', root, { innerText: 'Hello World' });
+  h1.toggleNode(); //on
+  h1.toggleNode(); //off
+
+  ```
+
+### Element.updateNode(elementObject) [void]
+  This method takes an elementObject and updates the node accordingly. The element object uses the properties from the normal node, for example: className, innerText and id. You can only specify properties that exists for that specific html tag. 
+
+  ``
+  import { Element, root } from 'nova';
+  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+
+  ```
 
 ### Element Getters
 
