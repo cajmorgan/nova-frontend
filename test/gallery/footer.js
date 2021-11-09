@@ -8,3 +8,4 @@ const footer = generator.createTree(`
   end`)
 
 export default footer
+

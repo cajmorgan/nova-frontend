@@ -1,4 +1,4 @@
-import { Group, Router, Element, root } from '../index';
+import { Group, Router, Element, root } from '../../index';
 import header from './header'
 import { search } from './search'
 import { galleryWrapper } from './gallery';
