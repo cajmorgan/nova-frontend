@@ -76,19 +76,30 @@ First we import Element and root. *IMPORTANT* always have a parent root in your 
 
   ```
 
-### Element.updateNode(elementObject) [void]
-  This method takes an elementObject and updates the node accordingly. The element object uses the properties from the normal node, for example: className, innerText and id. You can only specify properties that exists for that specific html tag. 
+### Element.updateNode(propertyObject) [void]
+  This method takes an propertyObject and updates the node accordingly. The element object uses the properties from the normal node, for example: className, innerText and id. You can only specify properties that exists for that specific html tag. 
 
   ```c
-  import { Element, root } from 'nova';
   const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
-  h1.updateNode({ // Updates all specified properties
+  h1.updateNode({ // Updates all specified properties, only works with properties that exists on h1
     innerText: 'Yooo'
     id: 'title'
     className: 'h1'
   })
 
   ```
+### Element.changeParent(Element || node) [void]
+  If you want to change the parentNode of the element, you can pass in either the element or node of the new parent and calling this method. The element node will be appended to the new parent node.
+
+  ```c
+  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+  const newParent = new Element('div', root, {}, true);
+  h1.changeParent(newParent);
+
+  ```
+### Element.addEventListener(event, callback) [void]
+  Calls the normal addEventListener on the element node.
+
 
 ### Element Getters
 

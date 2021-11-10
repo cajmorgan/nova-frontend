@@ -40,33 +40,33 @@ import { State, Element, Generator, root } from '../../index'
 
  
 
-  // const store = Redux.createStore(likesReducer);
+  const store = Redux.createStore(likesReducer);
   
  
   
-  // const render = () => {
-  //   const el = document.getElementById('value');
-  //   el.innerHTML = store.getState().toString();
-  // };
+  const render = () => {
+    const el = document.getElementById('value');
+    el.innerHTML = store.getState().toString();
+  };
   
-  // render();
-  // // You should somehow get a notification from the store and call render()...
-  // store.subscribe(render);
+  render();
+  // You should somehow get a notification from the store and call render()...
+  store.subscribe(render);
   
-  // document.getElementById('like').addEventListener('click', () => {
-  //   // Create an Action (command) about what should happend and send that to the store
-  //   
-  // });
+  document.getElementById('like').addEventListener('click', () => {
+    // Create an Action (command) about what should happend and send that to the store
+    
+  });
   
-  // document.getElementById('double').addEventListener('click', () => {
-  //   // Create an Action (command) about what should happend and send that to the store
-  //   store.dispatch(doubleLikes);
-  // });
+  document.getElementById('double').addEventListener('click', () => {
+    // Create an Action (command) about what should happend and send that to the store
+    store.dispatch(doubleLikes);
+  });
   
-  // document.getElementById('tripple').addEventListener('click', () => {
-  //   // Create an Action (command) about what should happend and send that to the store
-  //   store.dispatch(tripleLikes);
-  // });
+  document.getElementById('tripple').addEventListener('click', () => {
+    // Create an Action (command) about what should happend and send that to the store
+    store.dispatch(tripleLikes);
+  });
   
   })();
   
