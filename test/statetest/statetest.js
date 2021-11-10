@@ -1,7 +1,7 @@
 import { State, Element, Generator, root } from '../../index'
 
 (function() {
-  function yooWorker (state, action) {
+  function yooWorker (state = 'helo', action) {
     switch (action.type) {
       case 'YO':
         return state + 'YOOOO';
@@ -9,7 +9,7 @@ import { State, Element, Generator, root } from '../../index'
         return state;
     }
   };
-  function hiWorker (state, action) {
+  function hiWorker (state = 'helo', action) {
     switch (action.type) {
       case 'HI':
         return state + 'YOOOO';
@@ -19,7 +19,7 @@ import { State, Element, Generator, root } from '../../index'
   };
 
   const workers = State.mergeWorkers({ yooWorker, hiWorker });
-  const state = new State(workers, { yooWorker: 'helo', hiWorker: 'hei' });
+  const state = new State(workers);
   state.createAction('yoAdd', { type: 'YO' })
   state.createAction('hiAdd', { type: 'HI' })
 
@@ -30,10 +30,6 @@ import { State, Element, Generator, root } from '../../index'
       h2 innerText: '{{hiWorker}}' id: 'helo' className: 'helo'
     end`)
 
-  header.setProps({ 
-    yooWorker: state.getState().yooWorker,
-    hiWorker: state.getState().hiWorker
-  })
   header.render()
   const changeText = () => {
     header.elements[1].updateNode({ innerText: state.getState().yooWorker });
