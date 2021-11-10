@@ -1,72 +1,53 @@
 import { State, Element, Generator, root } from '../../index'
 
 (function() {
-  function worker (state, action) {
+  function yooWorker (state, action) {
     switch (action.type) {
-      case 'INCREMENT':
+      case 'YO':
         return state + 'YOOOO';
-      case 'TRIPLE':
-        return (state % 2) ? state * 3 : state;
+      default:
+        return state;
+    }
+  };
+  function hiWorker (state, action) {
+    switch (action.type) {
+      case 'HI':
+        return state + 'YOOOO';
       default:
         return state;
     }
   };
 
-
-  // const workers = State.mergeWorkers(likesWorker, secondWorker);
-  const state = new State(worker, 'helo');
-  state.createAction('incrementLikes', { type: 'INCREMENT' })
-  state.createAction('doubleLikes', { type: 'DOUBLE' })
+  const workers = State.mergeWorkers({ yooWorker, hiWorker });
+  const state = new State(workers, { yooWorker: 'helo', hiWorker: 'hei' });
+  state.createAction('yoAdd', { type: 'YO' })
+  state.createAction('hiAdd', { type: 'HI' })
 
   const generator = new Generator();
-  const text = generator.createTree(`
-    h1 innerText: 'helo'
-    h2 innerText: 'yo'
-  end`)
+  const header = generator.createTree(`
+    header
+      h1 innerText: '{{yooWorker}}'
+      h2 innerText: '{{hiWorker}}' id: 'helo' className: 'helo'
+    end`)
 
-  text.render()
-  // const text = new Element('h1', root, { innerText: state.getState().likesWorker }, true);
+  header.setProps({ 
+    yooWorker: state.getState().yooWorker,
+    hiWorker: state.getState().hiWorker
+  })
+  header.render()
   const changeText = () => {
-    text.elements.forEach(elem => {
-      elem.updateNode({ innerText: state.getState() });
-    })
+    header.elements[1].updateNode({ innerText: state.getState().yooWorker });
+    header.elements[2].updateNode({ innerText: state.getState().hiWorker });
   }
 
   state.subscribe(changeText);
 
-  text.elements[0].addEventListener('click', () => {
-    state.dispatch(state.getAction('incrementLikes'));
+  header.elements[0].addEventListener('click', () => {
+    state.dispatch(state.getAction('yoAdd'));
+    state.dispatch(state.getAction('hiAdd'));
   })
 
  
 
-  const store = Redux.createStore(likesReducer);
-  
- 
-  
-  const render = () => {
-    const el = document.getElementById('value');
-    el.innerHTML = store.getState().toString();
-  };
-  
-  render();
-  // You should somehow get a notification from the store and call render()...
-  store.subscribe(render);
-  
-  document.getElementById('like').addEventListener('click', () => {
-    // Create an Action (command) about what should happend and send that to the store
-    
-  });
-  
-  document.getElementById('double').addEventListener('click', () => {
-    // Create an Action (command) about what should happend and send that to the store
-    store.dispatch(doubleLikes);
-  });
-  
-  document.getElementById('tripple').addEventListener('click', () => {
-    // Create an Action (command) about what should happend and send that to the store
-    store.dispatch(tripleLikes);
-  });
-  
-  })();
+})();
   
