@@ -35,7 +35,13 @@ import { State, Element, Generator, root } from '../../index'
       h3 innerText: 'hiho'
     end`)
 
-  //Kolla om du kan bygga nått som gör att du kan passa in state i Components i combination med generator som props?
+  /* Kolla om du kan bygga nått som gör att du kan passa 
+  * in state i Components i combination 
+  * med generator som props?
+  * SUBSCRIBEA MED COMPONENTS / ELEMENTS! 
+  * Så istället för att passa in en funktion, passa in comopnents/elements
+  * Sen callar du en method som finns där som löser det. 
+  */
   header.setProps(init);
   
   header.render()
