@@ -1,7 +1,7 @@
 import { State, Element, Generator, root } from '../../index'
 
 (function() {
-  function yooWorker (state, action) {
+  const yooWorker = (state, action) => {
     switch (action.type) {
       case 'YO':
         return state + 'YOOOO';
@@ -12,10 +12,10 @@ import { State, Element, Generator, root } from '../../index'
     }
   };
   
-  function hiWorker (state, action) {
+  const hiWorker = (state, action) => {
     switch (action.type) {
       case 'HI':
-        return state + 'YOOOO';
+        return state + 'hiho';
       default:
         return state;
     }
@@ -25,7 +25,7 @@ import { State, Element, Generator, root } from '../../index'
   const workers = State.mergeWorkers({ yooWorker, hiWorker });
   const state = new State(workers, init);
   state.createAction('yoAdd', { type: 'YO' })
-  state.createAction('hoAdd', { type: 'HO' })
+  state.createAction('hoAdd', { type: 'HI' })
 
   const generator = new Generator();
   const header = generator.createTree(`
@@ -35,33 +35,16 @@ import { State, Element, Generator, root } from '../../index'
       h3 innerText: 'hiho'
     end`)
 
-  /* Kolla om du kan bygga nått som gör att du kan passa 
-  * in state i Components i combination 
-  * med generator som props?
-  * SUBSCRIBEA MED COMPONENTS / ELEMENTS! 
-  * Så istället för att passa in en funktion, passa in comopnents/elements
-  * Sen callar du en method som finns där som löser det. 
-  */
-  // header.setProps(init);
   header.setState(state);
   
-  header.render()
-  const changeText = () => {
-    header.elements[1].updateNode({ innerText: state.getState().yooWorker });
-  }
 
-  const changeColor = () => {
-    header.elements[2].updateNode({ innerText: state.getState().hiWorker });
-  }
-
-  // state.subscribe(changeText);
-  // state.subscribe(changeColor);
+  state.subscribe(header);
 
   header.elements[1].addEventListener('click', (e) => {
     state.dispatch(state.getAction('yoAdd'));
-    header.updateState();
+    state.dispatch(state.getAction('hoAdd'));
   })
 
-
+  header.render()
 })();
   
