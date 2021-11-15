@@ -42,7 +42,8 @@ import { State, Element, Generator, root } from '../../index'
   * Så istället för att passa in en funktion, passa in comopnents/elements
   * Sen callar du en method som finns där som löser det. 
   */
-  header.setProps(init);
+  // header.setProps(init);
+  header.setState(state);
   
   header.render()
   const changeText = () => {
@@ -53,12 +54,12 @@ import { State, Element, Generator, root } from '../../index'
     header.elements[2].updateNode({ innerText: state.getState().hiWorker });
   }
 
-  state.subscribe(changeText);
-  state.subscribe(changeColor);
+  // state.subscribe(changeText);
+  // state.subscribe(changeColor);
 
   header.elements[1].addEventListener('click', (e) => {
     state.dispatch(state.getAction('yoAdd'));
-    state.dispatch(state.getAction('hoAdd'));
+    header.updateState();
   })
 
 
