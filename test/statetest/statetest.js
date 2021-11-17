@@ -30,14 +30,14 @@ import { State, Element, Generator, root } from '../../index'
   const generator = new Generator();
   const header = generator.createTree(`
     header
-      h1 innerText: '{{yooWorker}}'
-      h2 innerText: '{{hiWorker}}' id: 'helo' className: 'helo'
+      div
+        h1 innerText: '{{yooWorker}}'
+      div
+        h2 innerText: '{{hiWorker}}' id: 'helo' className: 'helo'
       h3 innerText: 'hiho'
     end`)
 
   header.setState(state);
-  
-
   state.subscribe(header);
 
   header.elements[1].addEventListener('click', (e) => {
