@@ -46,18 +46,18 @@ GIVE EXAMPLES SHOW OFF.
     * [.text](#Element+text) ⇒ <code>text</code>
     * [.html](#Element+html) ⇒ <code>html</code>
     * [.siblings](#Element+siblings) ⇒ <code>nodeArray</code>
-    * [.updateNode(elementObject)](#Element+updateNode) ⇒
-    * [.toggleNode()](#Element+toggleNode) ⇒
-    * [.addNode()](#Element+addNode) ⇒
-    * [.removeNode()](#Element+removeNode) ⇒
-    * [.changeParent(newParentNode)](#Element+changeParent) ⇒
-    * [.addEventListener(event, callback)](#Element+addEventListener) ⇒
-    * [.addStyle(property, css)](#Element+addStyle) ⇒
+    * [.updateNode(elementObject)](#Element+updateNode) ⇒ <code>void</code>
+    * [.toggleNode()](#Element+toggleNode) ⇒ <code>void</code>
+    * [.addNode()](#Element+addNode) ⇒ <code>void</code>
+    * [.removeNode()](#Element+removeNode) ⇒ <code>void</code>
+    * [.changeParent(newParentNode)](#Element+changeParent) ⇒ <code>void</code>
+    * [.addEventListener(event, callback)](#Element+addEventListener) ⇒ <code>void</code>
+    * [.addStyle(property, css)](#Element+addStyle) ⇒ <code>void</code>
     * [.createComponent()](#Element+createComponent)
-    * [.beforeSibling()](#Element+beforeSibling) ⇒
-    * [.afterSibling()](#Element+afterSibling) ⇒
-    * [.after(reference)](#Element+after) ⇒
-    * [.before(reference)](#Element+before) ⇒
+    * [.beforeSibling()](#Element+beforeSibling) ⇒ <code>void</code>
+    * [.afterSibling()](#Element+afterSibling) ⇒ <code>void</code>
+    * [.after(reference)](#Element+after) ⇒ <code>void</code>
+    * [.before(reference)](#Element+before) ⇒ <code>void</code>
 
 <a name="new_Element_new"></a>
 
@@ -171,11 +171,10 @@ console.log(h1.siblings) //returns a nodeArray of h1 and h2.
 ```
 <a name="Element+updateNode"></a>
 
-### element.updateNode(elementObject) ⇒
+### element.updateNode(elementObject) ⇒ <code>void</code>
 Dynamically updates the element by passing an object containing the props you want to update
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -188,11 +187,10 @@ h1.updateNode({ id: 'goodbye', innerText: 'Goodbye World...' })
 ```
 <a name="Element+toggleNode"></a>
 
-### element.toggleNode() ⇒
+### element.toggleNode() ⇒ <code>void</code>
 Toggles node on and off
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 **Example**  
 ```js
 const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!' }, true); //On with true
@@ -201,11 +199,10 @@ h1.toggleNode() //On
 ```
 <a name="Element+addNode"></a>
 
-### element.addNode() ⇒
+### element.addNode() ⇒ <code>void</code>
 Appends node to parent, throws error if is already appended.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 **Example**  
 ```js
 const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!' }); //Off
@@ -213,11 +210,10 @@ h1.addNode() //On
 ```
 <a name="Element+removeNode"></a>
 
-### element.removeNode() ⇒
+### element.removeNode() ⇒ <code>void</code>
 Removes node from parent.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 **Example**  
 ```js
 const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!'}, true); //On
@@ -225,11 +221,10 @@ h1.removeNode() //Off
 ```
 <a name="Element+changeParent"></a>
 
-### element.changeParent(newParentNode) ⇒
+### element.changeParent(newParentNode) ⇒ <code>void</code>
 Appends node to new parent.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type |
 | --- | --- |
@@ -243,11 +238,10 @@ h1.changeParent(div); //Now h1 is appended to div instead.
 ```
 <a name="Element+addEventListener"></a>
 
-### element.addEventListener(event, callback) ⇒
+### element.addEventListener(event, callback) ⇒ <code>void</code>
 Calls addEventListener on node.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -260,11 +254,10 @@ Check https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListe
 ```
 <a name="Element+addStyle"></a>
 
-### element.addStyle(property, css) ⇒
+### element.addStyle(property, css) ⇒ <code>void</code>
 Dynamically adds css styles to Element.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -279,25 +272,22 @@ Creates a component putting the element inside
 **Kind**: instance method of [<code>Element</code>](#Element)  
 <a name="Element+beforeSibling"></a>
 
-### element.beforeSibling() ⇒
+### element.beforeSibling() ⇒ <code>void</code>
 Moves node one step up the tree, changing place with it's previous sibling.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 <a name="Element+afterSibling"></a>
 
-### element.afterSibling() ⇒
+### element.afterSibling() ⇒ <code>void</code>
 Moves node one step down the tree, changing place with it's next sibling.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 <a name="Element+after"></a>
 
-### element.after(reference) ⇒
+### element.after(reference) ⇒ <code>void</code>
 Appends node after a reference sibling
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type |
 | --- | --- |
@@ -305,11 +295,10 @@ Appends node after a reference sibling
 
 <a name="Element+before"></a>
 
-### element.before(reference) ⇒
+### element.before(reference) ⇒ <code>void</code>
 Appends node before a reference sibling
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
-**Returns**: void  
 
 | Param | Type |
 | --- | --- |
