@@ -31,83 +31,286 @@ GIVE EXAMPLES SHOW OFF.
 
 ## API
 
-### Element(tag, parent, propertyObject, render);
-The fundamental building block in Nova is the Element, which most other things in the library are built upon. The element is just a shell of the normal javascript node but adds extra functionality and shorter syntax to access and manipulate a node. 
+<a name="Element"></a>
 
-The Element represent One node and are created as following: 
+## Element
+**Kind**: global class  
 
-```c
+* [Element](#Element)
+    * [new Element(type, parent, elementObject, init)](#new_Element_new)
+    * [.node](#Element+node) ⇒ <code>node</code>
+    * [.type](#Element+type) ⇒ <code>type</code>
+    * [.parent](#Element+parent) ⇒ <code>parent</code>
+    * [.value](#Element+value) ⇒ <code>value</code>
+    * [.id](#Element+id) ⇒ <code>id</code>
+    * [.text](#Element+text) ⇒ <code>text</code>
+    * [.html](#Element+html) ⇒ <code>html</code>
+    * [.siblings](#Element+siblings) ⇒ <code>nodeArray</code>
+    * [.updateNode(elementObject)](#Element+updateNode) ⇒
+    * [.toggleNode()](#Element+toggleNode) ⇒
+    * [.addNode()](#Element+addNode) ⇒
+    * [.removeNode()](#Element+removeNode) ⇒
+    * [.changeParent(newParentNode)](#Element+changeParent) ⇒
+    * [.addEventListener(event, callback)](#Element+addEventListener) ⇒
+    * [.addStyle(property, css)](#Element+addStyle) ⇒
+    * [.createComponent()](#Element+createComponent)
+    * [.beforeSibling()](#Element+beforeSibling) ⇒
+    * [.afterSibling()](#Element+afterSibling) ⇒
+    * [.after(reference)](#Element+after) ⇒
+    * [.before(reference)](#Element+before) ⇒
+
+<a name="new_Element_new"></a>
+
+### new Element(type, parent, elementObject, init)
+The fundamental building block in Nova is the Element, which most other things in the library are built upon. 
+The element is just a shell of the normal javascript node but adds extra functionality 
+and shorter syntax to access and manipulate a node.
+
+**Returns**: void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | An htmlTag, for example 'div' or 'button'. |
+| parent | [<code>Element</code>](#Element) \| <code>node</code> | The parent in the DOM you want the element to belong to. |
+| elementObject | <code>object</code> | An object containing the javascript props like: { innerText: 'helo' } |
+| init | <code>boolean</code> | A boolean to indicate if you want to render the element now (default: false). |
+
+**Example**  
+```js
 import { Element, root } from 'nova';
 const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
-
 ```
+<a name="Element+node"></a>
 
-First we import Element and root. *IMPORTANT* always have a parent root in your html file with the id of "root": 
+### element.node ⇒ <code>node</code>
+Return the node of the element
 
-```c
-<main id="root"></main>
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+console.log(h1.node) //returns node
 ```
+<a name="Element+type"></a>
 
-### Element Methods
+### element.type ⇒ <code>type</code>
+Return the type of the element
 
-#### Element.addNode() [void]
-  Appends the node to the parent if it's not already rendered, else throws an error.
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+console.log(h1.type) //returns 'h1'
+```
+<a name="Element+parent"></a>
 
-  ```c
-  const h1 = new Element('h1', root, { innerText: 'Hello World' });
-  h1.addNode();
-  ```
+### element.parent ⇒ <code>parent</code>
+Return the parent of the element
 
-### Element.removeNode() [void]
-  Removes the node from the parent, to add node again, you can call Element.addNode().
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
+console.log(h1.parent) //returns node of root
+```
+<a name="Element+value"></a>
 
-  ```c
-  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true); // Render set to true 
-  h1.removeNode();
-  ```
+### element.value ⇒ <code>value</code>
+Return the value of the element
 
-### Element.toggleNode() [void]
-  Toggles between adding and removing the node from the parent. 
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const input = new Element('input', root, { type: 'text', value: 'some text' }, true);
+console.log(h1.value) //returns 'some text'
+```
+<a name="Element+id"></a>
 
-  ```c 
-  const h1 = new Element('h1', root, { innerText: 'Hello World' });
-  h1.toggleNode(); //on
-  h1.toggleNode(); //off
+### element.id ⇒ <code>id</code>
+Return the id of the element
 
-  ```
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'title', innerText: 'Welcome!' }, true);
+console.log(h1.id) //returns 'title'
+```
+<a name="Element+text"></a>
 
-### Element.updateNode(propertyObject) [void]
-  This method takes an propertyObject and updates the node accordingly. The element object uses the properties from the normal node, for example: className, innerText and id. You can only specify properties that exists for that specific html tag. 
+### element.text ⇒ <code>text</code>
+Return the text of the element
 
-  ```c
-  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
-  h1.updateNode({ // Updates all specified properties, only works with properties that exists on h1
-    innerText: 'Yooo'
-    id: 'title'
-    className: 'h1'
-  })
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'title', innerText: 'Welcome!' }, true);
+console.log(h1.text) //returns 'Welcome!'
+```
+<a name="Element+html"></a>
 
-  ```
-### Element.changeParent(Element || node) [void]
-  If you want to change the parentNode of the element, you can pass in either the element or node of the new parent and calling this method. The element node will be appended to the new parent node.
+### element.html ⇒ <code>html</code>
+Return the innerHTML of the element
 
-  ```c
-  const h1 = new Element('h1', root, { innerText: 'Hello World' }, true);
-  const newParent = new Element('div', root, {}, true);
-  h1.changeParent(newParent);
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'title', innerText: 'Welcome!' }, true);
+console.log(h1.html) //returns '<h1 id="title">Welcome!</h1>'
+```
+<a name="Element+siblings"></a>
 
-  ```
-### Element.addEventListener(event, callback) [void]
-  Calls the normal addEventListener on the element node.
+### element.siblings ⇒ <code>nodeArray</code>
+Return the siblings of the element
 
+**Kind**: instance property of [<code>Element</code>](#Element)  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'title', innerText: 'Welcome,' }, true);
+const h2 = new Element('h2', root, { id: 'subtitle', innerText: 'To an awesome page!' }, true);
+console.log(h1.siblings) //returns a nodeArray of h1 and h2.
+```
+<a name="Element+updateNode"></a>
 
-### Element Getters
+### element.updateNode(elementObject) ⇒
+Dynamically updates the element by passing an object containing the props you want to update
 
-#### Element.node
-  returns the node of the Element which you can use normal Javascript node methods on.
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
 
-### Element.type
+| Param | Type | Description |
+| --- | --- | --- |
+| elementObject | <code>object</code> | An object containing the javascript props like: { innerText: 'helo' } |
 
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!' }, true);
+h1.updateNode({ id: 'goodbye', innerText: 'Goodbye World...' })
+```
+<a name="Element+toggleNode"></a>
 
+### element.toggleNode() ⇒
+Toggles node on and off
 
-(See API for full reference and all functionality)
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!' }, true); //On with true
+h1.toggleNode() //Off
+h1.toggleNode() //On
+```
+<a name="Element+addNode"></a>
+
+### element.addNode() ⇒
+Appends node to parent, throws error if is already appended.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!' }); //Off
+h1.addNode() //On
+```
+<a name="Element+removeNode"></a>
+
+### element.removeNode() ⇒
+Removes node from parent.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+**Example**  
+```js
+const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!'}, true); //On
+h1.removeNode() //Off
+```
+<a name="Element+changeParent"></a>
+
+### element.changeParent(newParentNode) ⇒
+Appends node to new parent.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+
+| Param | Type |
+| --- | --- |
+| newParentNode | [<code>Element</code>](#Element) \| <code>node</code> | 
+
+**Example**  
+```js
+const div = new Element('div', root, { className: 'container' }, true);
+const h1 = new Element('h1', root, { id: 'welcome', innerText: 'Hello World!'}, true); //Appends to root
+h1.changeParent(div); //Now h1 is appended to div instead.
+```
+<a name="Element+addEventListener"></a>
+
+### element.addEventListener(event, callback) ⇒
+Calls addEventListener on node.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>event</code> | //f.e 'click' Any javascript supported event. |
+| callback | <code>function</code> | Callback function to be invoked when event happens. |
+
+**Example**  
+```js
+Check https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+```
+<a name="Element+addStyle"></a>
+
+### element.addStyle(property, css) ⇒
+Dynamically adds css styles to Element.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| property | <code>string</code> | A string containing what you want to change, for example 'color' |
+| css | <code>string</code> | The css value to use, for example 'red' |
+
+<a name="Element+createComponent"></a>
+
+### element.createComponent()
+Creates a component putting the element inside
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+<a name="Element+beforeSibling"></a>
+
+### element.beforeSibling() ⇒
+Moves node one step up the tree, changing place with it's previous sibling.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+<a name="Element+afterSibling"></a>
+
+### element.afterSibling() ⇒
+Moves node one step down the tree, changing place with it's next sibling.
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+<a name="Element+after"></a>
+
+### element.after(reference) ⇒
+Appends node after a reference sibling
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+
+| Param | Type |
+| --- | --- |
+| reference | [<code>Element</code>](#Element) | 
+
+<a name="Element+before"></a>
+
+### element.before(reference) ⇒
+Appends node before a reference sibling
+
+**Kind**: instance method of [<code>Element</code>](#Element)  
+**Returns**: void  
+
+| Param | Type |
+| --- | --- |
+| reference | [<code>Element</code>](#Element) |

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack serve",
     "build": "webpack",
-    "test": "node server.js && node test/app.test.js"
+    "test": "node server.js && node test/app.test.js",
+    "docs": "jsdoc2md ./lib/Element.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "webpack-dev-server": "^4.4.0"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^7.1.0",
     "webpack-cli": "^4.9.1"
   }
 }
