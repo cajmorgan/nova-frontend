@@ -7,7 +7,7 @@
     "start": "webpack serve",
     "build": "webpack",
     "test": "node server.js && node test/app.test.js",
-    "docs": "jsdoc2md ./lib/Element.js"
+    "docs": "jsdoc -c docConfig.js lib/"
   },
   "repository": {
     "type": "git",

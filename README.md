@@ -9,7 +9,7 @@ Features
 API
 
 ### What is Nova?
-Nova is an alternative to all those gigantic front-end frameworks, that often do more than is necessary when it comes to building simple UIs. Pure Vanilla Javascript is performance-wise the best way to build your front-end, but it can be hard to organize it properly and as the project grows, it might end up very messy. This is where Nova comes in, being a lightweight library packed with functionality for creating UI easier. 
+Nova is an alternative to all those gigantic front-end frameworks, that often do more than is necessary when it comes to building simple UIs. Pure Vanilla Javascript is performance-wise the best way to build your front-end in a SPA, but it can be hard to organize it properly and as the project grows, it might end up very messy. This is where Nova comes in, being a lightweight library packed with functionality for creating and structuring UIs more easily. 
 
 ### Features
 Nova comes with most of the needed built-in features for handling a single-page application. Features like easily generating html, routing and state-management.
@@ -27,9 +27,15 @@ Nova is built solely on classes which are a perfect fit to handle context by sto
 GIVE EXAMPLES SHOW OFF. 
 
 
-
-
 ## API
+## Classes
+
+<dl>
+<dt><a href="#Element">Element</a></dt>
+<dd></dd>
+<dt><a href="#Generator">Generator</a></dt>
+<dd></dd>
+</dl>
 
 <a name="Element"></a>
 
@@ -302,4 +308,86 @@ Appends node before a reference sibling
 
 | Param | Type |
 | --- | --- |
-| reference | [<code>Element</code>](#Element) |
+| reference | [<code>Element</code>](#Element) | 
+
+<a name="Generator"></a>
+
+## Generator
+**Kind**: global class  
+
+* [Generator](#Generator)
+    * [new Generator()](#new_Generator_new)
+    * [.createTree(input)](#Generator+createTree) ⇒ <code>Component</code>
+
+<a name="new_Generator_new"></a>
+
+### new Generator()
+The generator is a powerful way to generate HTML without writing actual HTML!
+It's meant to be very straightforward and to give your SPA a nice structure. No more angle brackets!
+
+**Example**  
+```js
+import { Generator } from 'nova';
+const generator = new Generator();
+const header = generator.createTree(`
+  header className: 'header'
+    h1 className: 'header__title' innerText: 'Hello World!'
+    h2 className: 'header__subtitle' innerText: 'This is my site.'
+end`)
+
+header.render();
+```
+<a name="Generator+createTree"></a>
+
+### generator.createTree(input) ⇒ <code>Component</code>
+'createTree' is the method you can use to generate HTML stored in a Component as Elements. 
+The string has to be in a certain format where indentations are very important.
+Indentations are what dictates if an element is a parent/child. Always use even indentations, 2 spaces per child. 
+The structure is always the same: `[indentation][htmlTag][property]: '[value]'` 
+like:
+
+**Kind**: instance method of [<code>Generator</code>](#Generator)  
+
+| Param | Type |
+| --- | --- |
+| input | <code>string</code> | 
+
+**Example**  
+```js
+`  h1 innerText: 'helo'`
+Valid properties are for specific a htmlTag. For example, you can use 'type' on 'input' but not on 'h1'
+```
+**Example**  
+```js
+` form
+    input type: 'text'
+end`
+
+Indentation dictates children/parent
+```
+**Example**  
+```js
+`
+  div className: 'grandparent'
+    main className: 'parent'
+      p className: 'child' innerText: 'I am a child of main'    
+end`  
+
+Always end the string on a new line with the word 'end'
+ 
+Full example
+```
+**Example**  
+```js
+import { Generator } from 'nova';
+const generator = new Generator();
+const header = generator.createTree(`
+  header className: 'header'
+    h1 className: 'header__title' innerText: 'Hello World!'
+    h2 className: 'header__subtitle' innerText: 'This is my site.'
+  nav id: 'menu'
+    ul className: 'menu__items'
+      li innerText: 'First item'
+      li innerText: 'Second item'
+  end`)
+```
