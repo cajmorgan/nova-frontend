@@ -1,4 +1,6 @@
-function taskUpdate (state, action) {
+import { State } from '../../../index';
+
+function taskWorker (state, action) {
   switch (action.type) {
     case 'TASK_ADD':
       //Push action.task to state 
@@ -10,3 +12,16 @@ function taskUpdate (state, action) {
       return state;
   }
 };
+
+function inputWorker (state, action) {
+  switch(action.type) {
+    case 'INPUT_CHANGE': {
+      state[action.field] = action.value;
+      return state;
+    }
+  }
+}
+
+const workers = State.mergeWorkers({ taskWorker, inputWorker });
+
+export default workers;
