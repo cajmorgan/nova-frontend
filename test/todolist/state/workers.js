@@ -3,11 +3,13 @@ import { State } from '../../../index';
 function taskWorker (state, action) {
   switch (action.type) {
     case 'TASK_ADD':
-      //Push action.task to state 
+      state.tasks.unshift(action.task);
+      return state;
     case 'TASK_UPDATE':
       // Find index in state by action.task.id and replace object in state with action.task
     case 'TASK_REMOVE':
-      // Find index in state by action.task.id and splice, return new state
+      state = state.tasks.filter(task => task.id !== +action.task.id );
+      return state;
     default:
       return state;
   }
@@ -19,6 +21,8 @@ function inputWorker (state, action) {
       state[action.field] = action.value;
       return state;
     }
+    default:
+      return state;
   }
 }
 

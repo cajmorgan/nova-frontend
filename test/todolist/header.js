@@ -18,10 +18,26 @@ end`)
 header.setState(state);
 state.subscribe(header);
 
-header
-  .retrieve('#title-input')
-  .addEventListener('keydown', (e) => {
+/** Event listeners */
+header.retrieve('#title-input').addEventListener('input', (e) => {
     state.dispatch(state.getAction('inputChange', { value: e.target.value, field: 'title' }))
   })
 
-export default header;
+header.retrieve('#description-input').addEventListener('input', (e) => {
+  state.dispatch(state.getAction('inputChange', { value: e.target.value, field: 'description' }))
+})
+
+header.retrieve('.header__form')[0].addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = state.getState().inputWorker;
+  state.dispatch(state.getAction('taskAdd', { task: {
+    id: Date.now(),
+    title: input.title,
+    description: input.description
+  } }))
+})
+
+export { 
+  header, 
+  state
+};
