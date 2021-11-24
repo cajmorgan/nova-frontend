@@ -5,8 +5,6 @@ const generator = new Generator();
 
 const header = generator.createTree(`
   header className: 'header'
-    button className: 'header__hideDone' innerText: 'Hide Done'
-    button className: 'header__clearInput' innerText: 'Clear Text'
     form className: 'header__form'
       label className: 'form__label' htmlFor: 'title-input' innerText: 'Title'
       input className: 'form__input' id: 'title-input' value: '{{inputWorker.title}}'
@@ -33,11 +31,12 @@ header.retrieve('.header__form')[0].addEventListener('submit', (e) => {
   state.dispatch(state.getAction('taskAdd', { task: {
     id: Date.now(),
     title: input.title,
-    description: input.description
+    description: input.description,
+    done: false
   } }))
 })
 
 export { 
-  header, 
+  header,
   state
 };

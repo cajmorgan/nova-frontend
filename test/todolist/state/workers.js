@@ -5,10 +5,17 @@ function taskWorker (state, action) {
     case 'TASK_ADD':
       state.tasks.unshift(action.task);
       return state;
-    case 'TASK_UPDATE':
-      // Find index in state by action.task.id and replace object in state with action.task
+    case 'TASK_CHANGE': 
+      state.tasks.forEach(task => {
+        if (task.id === +action.task.id) 
+          task.done = !task.done;
+      })
+      
+      state.toChange = action.task.id;
+      return state;
     case 'TASK_REMOVE':
-      state = state.tasks.filter(task => task.id !== +action.task.id );
+      state.tasks = state.tasks.filter(task => task.id !== +action.task.id );
+      state.lastDeleted = action.task.id;
       return state;
     default:
       return state;
