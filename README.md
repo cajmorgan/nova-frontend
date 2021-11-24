@@ -60,13 +60,13 @@ You can also supply it with an array of Elements.
 ```js
 import { Generator } from 'nova';
 const generator = new Generator();
-const header = generator.createTree(` //header is the component
+const header = generator.createTree(`
   header className: 'header'
     h1 className: 'header__title' innerText: 'Hello World!'
     h2 className: 'header__subtitle' innerText: 'This is my site.'
 end`)
 
-header.render();
+header.render(); //header is the component
 ```
 <a name="Component+elements"></a>
 
@@ -96,8 +96,8 @@ article className: 'task' id: '{{id}}'
 
  task.setProps({
  id: 1, 
- title: Buy Milk, 
- description: With chocolate taste,
+ title: 'Buy Milk', 
+ description: 'With chocolate taste',
 })
 ```
 <a name="Element"></a>
