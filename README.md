@@ -31,12 +31,75 @@ GIVE EXAMPLES SHOW OFF.
 ## Classes
 
 <dl>
+<dt><a href="#Component">Component</a></dt>
+<dd></dd>
 <dt><a href="#Element">Element</a></dt>
 <dd></dd>
 <dt><a href="#Generator">Generator</a></dt>
 <dd></dd>
 </dl>
 
+<a name="Component"></a>
+
+## Component
+**Kind**: global class  
+
+* [Component](#Component)
+    * [new Component()](#new_Component_new)
+    * [.elements](#Component+elements) ⇒ <code>ArrayOfElements</code>
+    * [.setProps(propsObject)](#Component+setProps) ⇒ <code>void</code>
+
+<a name="new_Component_new"></a>
+
+### new Component()
+The component is a wrapper for Elements. A component is basically a block of Elements.
+The best way to create a Component is to use the Generator. 
+You can also supply it with an array of Elements.
+
+**Example**  
+```js
+import { Generator } from 'nova';
+const generator = new Generator();
+const header = generator.createTree(` //header is the component
+  header className: 'header'
+    h1 className: 'header__title' innerText: 'Hello World!'
+    h2 className: 'header__subtitle' innerText: 'This is my site.'
+end`)
+
+header.render();
+```
+<a name="Component+elements"></a>
+
+### component.elements ⇒ <code>ArrayOfElements</code>
+**Kind**: instance property of [<code>Component</code>](#Component)  
+<a name="Component+setProps"></a>
+
+### component.setProps(propsObject) ⇒ <code>void</code>
+Set props of a generated component using Generator. 
+When generating the component, you need to put the value where you want to set the props as '{{whatever}}'.
+Then when supplying the propsObject to the setProps function, you set the value by { whatever: your-value }
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| propsObject | <code>Object</code> | 
+
+**Example**  
+```js
+const task = generator.createTree(`
+article className: 'task' id: '{{id}}'
+  h2 className: 'task__title' innerText: '{{title}}'
+  p className: 'task__description' innerText: '{{description}}'
+  button className: 'task__remove-button' innerText: 'X'
+ end`)
+
+ task.setProps({
+ id: 1, 
+ title: Buy Milk, 
+ description: With chocolate taste,
+})
+```
 <a name="Element"></a>
 
 ## Element
@@ -206,7 +269,7 @@ h1.toggleNode() //On
 <a name="Element+addNode"></a>
 
 ### element.addNode() ⇒ <code>void</code>
-Appends node to parent, throws error if is already appended.
+Appends node to parent.
 
 **Kind**: instance method of [<code>Element</code>](#Element)  
 **Example**  
@@ -317,7 +380,7 @@ Appends node before a reference sibling
 
 * [Generator](#Generator)
     * [new Generator()](#new_Generator_new)
-    * [.createTree(input)](#Generator+createTree) ⇒ <code>Component</code>
+    * [.createTree(input)](#Generator+createTree) ⇒ [<code>Component</code>](#Component)
 
 <a name="new_Generator_new"></a>
 
@@ -339,7 +402,7 @@ header.render();
 ```
 <a name="Generator+createTree"></a>
 
-### generator.createTree(input) ⇒ <code>Component</code>
+### generator.createTree(input) ⇒ [<code>Component</code>](#Component)
 'createTree' is the method you can use to generate HTML stored in a Component as Elements. 
 The string has to be in a certain format where indentations are very important.
 Indentations are what dictates if an element is a parent/child. Always use even indentations, 2 spaces per child. 
