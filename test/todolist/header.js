@@ -36,7 +36,7 @@ header.retrieve('.header__form')[0].addEventListener('submit', (e) => {
   } }))
 })
 
-export { 
+export {
   header,
   state
 };

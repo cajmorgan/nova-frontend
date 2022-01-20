@@ -4,9 +4,9 @@ import { State, Element, Generator, root } from '../../index'
   const yooWorker = (state, action) => {
     switch (action.type) {
       case 'YO':
-        return state + 'YOOOO';
+        return { title: state[action.field] + action.text };
       case 'HO':
-        return state + 'hooo';
+        return { title: state[action.field] + action.text };
       default:
         return state;
     }
@@ -15,13 +15,13 @@ import { State, Element, Generator, root } from '../../index'
   const hiWorker = (state, action) => {
     switch (action.type) {
       case 'HI':
-        return state + 'hiho';
+        return {title: state[action.field] + 'hiho'};
       default:
         return state;
     }
   };
 
-  const init = { yooWorker: 'helo', hiWorker: 'hiho' };
+  const init = { yooWorker: { title: 'yo' }, hiWorker: { title: 'hiha' } };
   const workers = State.mergeWorkers({ yooWorker, hiWorker });
   const state = new State(workers, init);
   state.createAction('yoAdd', { type: 'YO' })
@@ -31,9 +31,9 @@ import { State, Element, Generator, root } from '../../index'
   const header = generator.createTree(`
     header
       div
-        h1 innerText: '{{yooWorker}}'
+        h1 innerText: '{{yooWorker.title}}'
       div
-        h2 innerText: '{{hiWorker}}' id: 'helo' className: 'helo'
+        h2 innerText: '{{hiWorker.title}}' id: 'helo' className: 'helo'
       h3 innerText: 'hiho'
     end`)
 
@@ -41,8 +41,8 @@ import { State, Element, Generator, root } from '../../index'
   state.subscribe(header);
 
   header.elements[1].addEventListener('click', (e) => {
-    state.dispatch(state.getAction('yoAdd'));
-    state.dispatch(state.getAction('hoAdd'));
+    state.dispatch(state.getAction('yoAdd', { text: 'helo', field: 'title' }));
+    state.dispatch(state.getAction('hoAdd', { text: 'yo', field: 'title' }));
   })
 
   header.render()
