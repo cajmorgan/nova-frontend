@@ -45,6 +45,8 @@ Nova is built solely on classes which are a perfect fit to handle context by sto
 <dd></dd>
 <dt><a href="#Generator">Generator</a></dt>
 <dd></dd>
+<dt><a href="#State">State</a></dt>
+<dd></dd>
 </dl>
 
 <a name="Component"></a>
@@ -619,5 +621,156 @@ const header = generator.createTree(`
         li innerText: 'First item'
         li innerText: 'Second item'
   end`)
+```
+<a name="State"></a>
+
+## State
+**Kind**: global class  
+
+* [State](#State)
+    * [new State()](#new_State_new)
+    * _instance_
+        * [.getState()](#State+getState) ⇒ <code>Object</code>
+        * [.createAction(name, deps)](#State+createAction)
+        * [.getAction(name, deps)](#State+getAction) ⇒ <code>Objectt</code>
+        * [.subscribe(listener)](#State+subscribe) ⇒ <code>function</code>
+        * [.dispatch(action)](#State+dispatch)
+    * _static_
+        * [.mergeWorkers(workers)](#State.mergeWorkers) ⇒ <code>Object</code>
+
+<a name="new_State_new"></a>
+
+### new State()
+State management for Nova. Heavily inspired by Redux with a similar system but in a way, more compact.
+
+**Example**  
+```js
+const initState = { exampleWorkerOne: { someText: 'hello, '}, exampleWorkerTwo: ... } 
+const workers = State.mergeWorkers({ exampleWorkerOne, exampleWorkerTwo });
+const state = new State(workers, initState);
+```
+<a name="State+getState"></a>
+
+### state.getState() ⇒ <code>Object</code>
+Returns the state object.
+
+**Kind**: instance method of [<code>State</code>](#State)  
+**Returns**: <code>Object</code> - state object  
+**Example**  
+```js
+const initState = { whateverWorker: { title: 'Yo!', desc: 'Hello there...' } };
+const state = new State(workers, init);
+
+const whateverWorkerState = state.getState().whateverWorker;
+```
+<a name="State+createAction"></a>
+
+### state.createAction(name, deps)
+Creates the action for the worker, which you can access from the action argument in the callback. 
+The name supplied as the first argument needs to be unique for every action.
+
+**Kind**: instance method of [<code>State</code>](#State)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>String</code> | unique name for action. |
+| deps | <code>Object</code> | object containing prop "type". |
+
+**Example**  
+```js
+state.createAction('actionName', { type: 'ACTION' })
+```
+<a name="State+getAction"></a>
+
+### state.getAction(name, deps) ⇒ <code>Objectt</code>
+This function is used to set new dependencies to a specific action.
+Prefarably called together with dispatch as the argument.
+The dependency can contain an optional property for use when setting up state together with "setState". 
+See Component for more info regarding the optional property.
+
+**Kind**: instance method of [<code>State</code>](#State)  
+**Returns**: <code>Objectt</code> - - returns the dependencies.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>String</code> | the name of the action. |
+| deps | <code>Object</code> | the dependencies that will be accessible through the action argument in the worker. |
+
+**Example**  
+```js
+state.dispatch(state.getAction('actionName', { someText: 'helo', optionalProperty: 'title' })); 
+```
+<a name="State+subscribe"></a>
+
+### state.subscribe(listener) ⇒ <code>function</code>
+The subscribe function takes 3 different listeners as an argument. 
+If you use "setState" together with a component, you will supply the component as the argument.
+Generelly when not using "setState", you want to supply an object with the action type and function.
+This will make sure that the function only gets called when the specific action is set, see example.
+If you supply a function directly, that one will get called every time you use dispatch, 
+which is generelly unnecessary.
+
+**Kind**: instance method of [<code>State</code>](#State)  
+**Returns**: <code>function</code> - . unsubscribe function, call it to remove listener.  
+
+| Param | Type |
+| --- | --- |
+| listener | [<code>Component</code>](#Component) \| <code>Object</code> \| <code>function</code> | 
+
+**Example**  
+```js
+state.subscribe(header); //Component
+state.subscribe({ type: 'TASK_ADD', func: addTask }); //Only called when "TASK_ADD" is dispatched.
+state.subscribe(addTask); //Called every dispatch.
+```
+<a name="State+dispatch"></a>
+
+### state.dispatch(action)
+Dispatch is what you call to update state.
+It's preferable to call it together with "getAction".
+It first calls the worker to get the state and modifications.
+Then it will call the listener you supplied with subscribe.
+How it will call the listener depends on what type of listener you called subscribe with.
+
+**Kind**: instance method of [<code>State</code>](#State)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| action | <code>Object</code> | the dependencies supplied, see "getAction". |
+
+**Example**  
+```js
+state.dispatch(state.getAction('actionName', { someText: 'helo', optionalProperty: 'title' })); 
+```
+<a name="State.mergeWorkers"></a>
+
+### State.mergeWorkers(workers) ⇒ <code>Object</code>
+MergeWorkers is a static method that should always be used before supplying workers to state initialization.
+
+**Kind**: static method of [<code>State</code>](#State)  
+**Returns**: <code>Object</code> - state object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| workers | <code>Object</code> | takes and object that have the function as a key-value pair with same name |
+
+**Example**  
+```js
+const exampleWorkerOne = (state, action) => {
+  switch(action.type) {
+    case 'ACTION': 
+     return state.someText + 'hello again!';
+    default:
+      return state;
+  }
+}
+
+const exampleWorkerTwo = (state, action) => {
+ ...
+}
+
+const initState = { exampleWorkerOne: { someText: 'hello, '}, exampleWorkerTwo: ... } 
+const workers = State.mergeWorkers({ exampleWorkerOne, exampleWorkerTwo });
+const state = new State(workers, initState);
 ```
 
