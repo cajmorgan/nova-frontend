@@ -1,4 +1,4 @@
-import { Generator, root, Element, Group } from '../index';
+import { Generator, root, Element, Group } from '../../index';
 import { createGallery } from './gallery'
 import { createPagination } from './pagination';
 

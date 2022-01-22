@@ -1,4 +1,4 @@
-import { Element, Generator, Group, root } from '../index';
+import { Element, Generator, Group, root } from '../../index';
 
 const paginationWrapper = new Element('section', root, { className: 'pagination-wrapper' });
 

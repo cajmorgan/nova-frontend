@@ -1,4 +1,4 @@
-import { Generator, Group, Element, root } from '../index'
+import { Generator, Group, Element, root } from '../../index'
 
 const galleryWrapper = new Element('section', root, { className: 'gallery-wrapper' });
 

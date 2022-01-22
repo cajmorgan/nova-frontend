@@ -4,7 +4,7 @@ import { State, Element, Generator, root } from '../../index'
   const yooWorker = (state, action) => {
     switch (action.type) {
       case 'YO':
-        return { title: state[action.field] + action.text };
+        return { title: state[action.field] + action.text, text: 'hiho-clicked' };
       case 'HO':
         return { title: state[action.field] + action.text };
       default:
@@ -21,7 +21,7 @@ import { State, Element, Generator, root } from '../../index'
     }
   };
 
-  const init = { yooWorker: { title: 'yo' }, hiWorker: { title: 'hiha' } };
+  const init = { yooWorker: { title: 'yo', text: 'hiho' }, hiWorker: { title: 'hiha' } };
   const workers = State.mergeWorkers({ yooWorker, hiWorker });
   const state = new State(workers, init);
   state.createAction('yoAdd', { type: 'YO' })
@@ -31,7 +31,7 @@ import { State, Element, Generator, root } from '../../index'
   const header = generator.createTree(`
     header
       div
-        h1 innerText: '{{yooWorker.title}}'
+        h1 innerText: '{{yooWorker.title}}' className: '{{yooWorker.text}}'
       div
         h2 innerText: '{{hiWorker.title}}' id: 'helo' className: 'helo'
       h3 innerText: 'hiho'

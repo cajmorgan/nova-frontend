@@ -13,7 +13,7 @@ function addTask() {
   tasks.update(componentArray);
   tasks.components.forEach(comp => {
     if (comp.elements[0].className === 'task')
-      comp.retrieve('.task__remove-button')[0].removeNode()
+      comp.retrieve('.task__remove-button')[0].removeNode();
   });
   
   const removeBtn = newTask.retrieve('.task__remove-button')[0];

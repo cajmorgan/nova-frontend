@@ -1,4 +1,4 @@
-import { Generator } from '../index'
+import { Generator } from '../../index'
 
 const generator = new Generator();
 

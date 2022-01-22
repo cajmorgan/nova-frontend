@@ -12,7 +12,7 @@ API
 Nova is an alternative to all those gigantic front-end frameworks, that often do more than is necessary when it comes to building simple UIs. Pure Vanilla Javascript is performance-wise the best way to build your front-end in a SPA, but it can be hard to organize it properly and as the project grows, it might end up very messy. This is where Nova comes in, being a lightweight library packed with functionality for creating and structuring UIs more easily. 
 
 ### Features
-Nova comes with the most of the needed features for handling a single-page application. Features like easily generating html, routing and state-management.
+Nova comes with most of the needed built-in features for handling a single-page application. Features like easily generating html, routing and state-management.
 
 Nova is built solely on classes which are a perfect fit to handle context by storing the temporary data in a few places as possible. The topics that are necessary to understand are: 
 
@@ -48,6 +48,13 @@ GIVE EXAMPLES SHOW OFF.
     * [new Component()](#new_Component_new)
     * [.elements](#Component+elements) ⇒ <code>ArrayOfElements</code>
     * [.setProps(propsObject)](#Component+setProps) ⇒ <code>void</code>
+    * [.setState(state)](#Component+setState) ⇒ <code>void</code>
+    * [.retrieve(input)](#Component+retrieve) ⇒ [<code>Element</code>](#Element)
+    * [.changeParent(newParent)](#Component+changeParent)
+    * [.render()](#Component+render)
+    * [.unrender()](#Component+unrender)
+    * [.deleteByIndex(index)](#Component+deleteByIndex)
+    * [.deleteById(id)](#Component+deleteById)
 
 <a name="new_Component_new"></a>
 
@@ -100,6 +107,156 @@ article className: 'task' id: '{{id}}'
  description: 'With chocolate taste',
 })
 ```
+<a name="Component+setState"></a>
+
+### component.setState(state) ⇒ <code>void</code>
+A clever way to set state directly to elements properties using Generator. 
+It works similarily to setProps but with some modifications.
+To fully understand how this function works, it's recommended to read the docs about State and Generator first.
+When generating the component like setProps, you need to put the value where you want to set the state as '{{workerName.whateverProp}}' note the DOT '.'.
+
+When supplying the initial state to State, 
+you should supply it as an object with the key name of the worker with the preferred value, f.e { whateverWorker: { whateverField: 'whateverValue' }} (See example below for clarification).
+The field is the name you supply when generating the elements (Check generator example below for clarification).
+
+The worker needs to return an object with all fields specified in the generator, else it will replace the state with undefined.
+Everytime the worker returns the object with the specified field, it will automatically update the value you supplied in the generator. 
+
+This method is very useful when you want the state to be managed by the library instead of supplying custom functions to update the text.
+
+NOTE: The following example below is not using the intended project structure used for state, and should preferable be splitted into different files, 
+but it's just a simple demonstration of how setState works.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| state | <code>Object</code> | 
+
+**Example**  
+```js
+const whateverWorker = (state, action) => {
+ switch (action.type) {
+   case 'WHATEVER_ACTION':
+ return { whateverText: state[action.field] + action.appendText };
+ default:
+   return state;
+ }
+};
+
+const initState = { whateverWorker: { whateverText: 'yo' } };
+const workers = State.mergeWorkers({ whateverWorker });
+const state = new State(workers, initState);
+state.createAction('whateverAction', { type: 'WHATEVER_ACTION' });
+
+const generator = new Generator();
+const header = generator.createTree(`
+ header
+   div
+     h1 innerText: '{{whateverWorker.whateverText}}'
+end`);
+
+header.setState(state);
+state.subscribe(header);
+
+//Gets the div as in the order supplied to generator
+header.elements[1].addEventListener('click', () => {
+ state.dispatch(state.getAction('whateverAction', { appendText: 'HELLO', field: 'whateverText' }));
+})
+
+header.render();
+```
+<a name="Component+retrieve"></a>
+
+### component.retrieve(input) ⇒ [<code>Element</code>](#Element)
+A fluid function that returns the elements searched for in a component based on id, class or tag.
+It checks for # to find a id and in taht case returns the element directly. 
+For tags and classes, it will always return an array of the found elements.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| input | <code>String</code> | 
+
+**Example**  
+```js
+const header = generator.createTree(`
+ div id: 'hello'
+   h1 innerText: 'Yo!'
+ div
+   h2 innerText: 'Welcome.' 
+end`)
+
+const divWithIdHello = header.retrieve('#hello')
+const bothDivs = header.retrieve('div');
+```
+<a name="Component+changeParent"></a>
+
+### component.changeParent(newParent)
+Changes the components grandparent to another element supplied.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| newParent | [<code>Element</code>](#Element) | 
+
+**Example**  
+```js
+const generator = new Generator();
+
+  const aNewParent = new Element('article', root, {}, true);
+
+  const header = generator.createTree(`
+    div id: 'grandparent'
+      h1 innerText: 'Welcome!'
+      div
+        h2 innerText: 'To my page...'
+        div 
+        div
+  end`)
+
+  header.changeParent(aNewParent);
+  header.render();
+```
+<a name="Component+render"></a>
+
+### component.render()
+Calls node.appendChild for every node inside the elements of the component.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+<a name="Component+unrender"></a>
+
+### component.unrender()
+Calls node.removeChild for every node inside the elements of the component.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+<a name="Component+deleteByIndex"></a>
+
+### component.deleteByIndex(index)
+Discards element inside component based on index, either from array supplied or the order from generator.createTree.
+Calling this before render has undefined behavior. 
+Note that index 0 will remove the whole component.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| index | <code>Number</code> | 
+
+<a name="Component+deleteById"></a>
+
+### component.deleteById(id)
+Deletes element based on ID, doesn't need any #.
+Else the same applies to this function as deleteByIndex.
+
+**Kind**: instance method of [<code>Component</code>](#Component)  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
 <a name="Element"></a>
 
 ## Element
@@ -406,7 +563,8 @@ header.render();
 'createTree' is the method you can use to generate HTML stored in a Component as Elements. 
 The string has to be in a certain format where indentations are very important.
 Indentations are what dictates if an element is a parent/child. Always use even indentations, 2 spaces per child. 
-The structure is always the same: `[indentation][htmlTag][property]: '[value]'` 
+The structure is always the same: `[indentation][htmlTag][property]: '[value]'`.
+Note that you need to to use only one grandparent for all the element generated, else it will throw an error!.
 like:
 
 **Kind**: instance method of [<code>Generator</code>](#Generator)  
@@ -448,9 +606,9 @@ const header = generator.createTree(`
   header className: 'header'
     h1 className: 'header__title' innerText: 'Hello World!'
     h2 className: 'header__subtitle' innerText: 'This is my site.'
-  nav id: 'menu'
-    ul className: 'menu__items'
-      li innerText: 'First item'
-      li innerText: 'Second item'
+    nav id: 'menu'
+      ul className: 'menu__items'
+        li innerText: 'First item'
+        li innerText: 'Second item'
   end`)
 ```
