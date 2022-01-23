@@ -1,6 +1,6 @@
 {
   "name": "nova-frontend",
-  "version": "0.4.2",
+  "version": "0.4.21",
   "description": "Nova is an alternative to all those gigantic front-end frameworks, that often do more than is necessary when it comes to building simple UIs. Pure Vanilla Javascript is performance-wise the best way to build your front-end in a SPA, but it can be hard to organize it properly and as the project grows, it might end up very messy. This is where Nova comes in, being a lightweight library packed with functionality for creating and structuring UIs more easily.",
   "main": "nova.js",
   "scripts": {
@@ -9,6 +9,12 @@
     "test": "node server.js && node test/app.test.js",
     "docs": "node docConfig.js"
   },
+  "keywords": [
+    "frontend",
+    "SPA",
+    "performance",
+    "library"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cajmorgan/nova-frontend.git"
