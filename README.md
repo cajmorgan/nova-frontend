@@ -45,6 +45,10 @@ Nova is built solely on classes which are a perfect fit to handle context by sto
 <dd></dd>
 <dt><a href="#Generator">Generator</a></dt>
 <dd></dd>
+<dt><a href="#Group">Group</a></dt>
+<dd></dd>
+<dt><a href="#Router">Router</a></dt>
+<dd></dd>
 <dt><a href="#State">State</a></dt>
 <dd></dd>
 </dl>
@@ -622,6 +626,178 @@ const header = generator.createTree(`
         li innerText: 'Second item'
   end`)
 ```
+<a name="Group"></a>
+
+## Group
+**Kind**: global class  
+
+* [Group](#Group)
+    * [new Group(arrayOfComponents, parent)](#new_Group_new)
+    * [.components](#Group+components) ⇒ [<code>Array.&lt;Component&gt;</code>](#Component)
+    * [.render()](#Group+render)
+    * [.add(component)](#Group+add)
+    * [.update(arrayOfComponents)](#Group+update)
+    * [.unrender()](#Group+unrender)
+    * [.retrieve(id)](#Group+retrieve) ⇒ <code>Array.&lt;elements&gt;</code>
+    * [.deleteById(id)](#Group+deleteById)
+
+<a name="new_Group_new"></a>
+
+### new Group(arrayOfComponents, parent)
+A group is a wrapper for components where it's possible to do bulk operations.
+This is very usefuly when you want a group of components to have the same parent.
+In a situation where you want to append new components, for example in a todo-list, 
+it's highly recommended to wrap them all in a group so they share the same grandparent.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arrayOfComponents | <code>Array.&lt;Components&gt;</code> | An array of components, every element will be automatically converted to a component. |
+| parent | [<code>Element</code>](#Element) | Element used to wrap the components, changing the grandparent node. |
+
+**Example**  
+```js
+const taskOne = generator.createTree(`
+ ...
+`)
+
+const taskTwo = ...
+
+
+const taskWrapper = new Element('section', root, { className: 'task-wrapper' });
+const tasks = new Group([taskOne, taskTwo], taskWrapper);
+tasks.render();
+```
+<a name="Group+components"></a>
+
+### group.components ⇒ [<code>Array.&lt;Component&gt;</code>](#Component)
+Returns an array of components
+
+**Kind**: instance property of [<code>Group</code>](#Group)  
+<a name="Group+render"></a>
+
+### group.render()
+Calls render on all Components inside Group. Same as Component.render().
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+<a name="Group+add"></a>
+
+### group.add(component)
+Adds a new component to the group dynamically. 
+This also has the effect of assigning the wrapper grandparent to the added component.
+Very useful when you are adding new components dynamically to the DOM, like more todos in a list.
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+
+| Param | Type |
+| --- | --- |
+| component | [<code>Component</code>](#Component) | 
+
+<a name="Group+update"></a>
+
+### group.update(arrayOfComponents)
+Replaces the components in the group with a new array of components.
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+
+| Param | Type |
+| --- | --- |
+| arrayOfComponents | [<code>Array.&lt;Component&gt;</code>](#Component) | 
+
+<a name="Group+unrender"></a>
+
+### group.unrender()
+Calls unrender on all components. Same as Component.unrender().
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+<a name="Group+retrieve"></a>
+
+### group.retrieve(id) ⇒ <code>Array.&lt;elements&gt;</code>
+Retrieve a component in a group. At the moment only supports ids.
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
+<a name="Group+deleteById"></a>
+
+### group.deleteById(id)
+Deletes a component in a group by id.
+
+**Kind**: instance method of [<code>Group</code>](#Group)  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
+<a name="Router"></a>
+
+## Router
+**Kind**: global class  
+
+* [Router](#Router)
+    * [new Router(path, componentArray)](#new_Router_new)
+    * [.getPath()](#Router.getPath) ⇒
+    * [.changePath(newPath)](#Router.changePath)
+
+<a name="new_Router_new"></a>
+
+### new Router(path, componentArray)
+To get the full SPA feel the router is here for rendering different groups or components based on the url.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | The path bound to this route. All components applied will be rendered only when the URI is the same. |
+| componentArray | <code>Array.&lt;Components&gt;</code> | Array of components. If you want to supply an element you can do Element.createComponent(); |
+
+**Example**  
+```js
+import { Router, Group, Element, Generator, root } from '../../';
+
+ const wrapper = new Element('div', root, { id: 'wrapper' }, true);
+
+ const generator = new Generator;
+ const component = generator.createTree(`
+   div
+     h1 innerText: 'Router example.'
+     button innerText: 'Click it'
+ end`)
+
+ component.retrieve('button')[0].addEventListener('click', () => {
+   Router.changePath('/about');
+ })
+
+ const about = new Element('h1', root, { innerText: 'Hello there!'}).createComponent();
+ const group = new Group([component], wrapper);
+
+ new Router('/', [group])
+ new Router('/about', [about]);
+```
+<a name="Router.getPath"></a>
+
+### Router.getPath() ⇒
+Returns current url path
+
+**Kind**: static method of [<code>Router</code>](#Router)  
+**Returns**: current path  
+<a name="Router.changePath"></a>
+
+### Router.changePath(newPath)
+A static mathod that uses history.pushState to set new url location.
+
+**Kind**: static method of [<code>Router</code>](#Router)  
+
+| Param | Type |
+| --- | --- |
+| newPath | <code>String</code> | 
+
+**Example**  
+```js
+Router.newPath('/contact');
+```
 <a name="State"></a>
 
 ## State
@@ -641,13 +817,38 @@ const header = generator.createTree(`
 <a name="new_State_new"></a>
 
 ### new State()
-State management for Nova. Heavily inspired by Redux with a similar system but in a way, more compact.
+State management system for Nova. Heavily inspired by Redux with a similar system but in a way, more compact.
 
 **Example**  
 ```js
-const initState = { exampleWorkerOne: { someText: 'hello, '}, exampleWorkerTwo: ... } 
-const workers = State.mergeWorkers({ exampleWorkerOne, exampleWorkerTwo });
+const whateverWorker = (state, action) => {
+ switch (action.type) {
+   case 'WHATEVER_ACTION':
+     return { whateverText: state[action.field] + action.appendText };
+     default:
+   return state;
+ }
+};
+
+const initState = { whateverWorker: { whateverText: 'yo' } };
+const workers = State.mergeWorkers({ whateverWorker });
 const state = new State(workers, initState);
+state.createAction('whateverAction', { type: 'WHATEVER_ACTION' });
+
+const generator = new Generator();
+const header = generator.createTree(`
+ header
+   div
+     h1 innerText: '{{whateverWorker.whateverText}}'
+end`);
+
+header.setState(state);
+state.subscribe(header);
+
+//Gets the div as in the order supplied to generator
+header.elements[1].addEventListener('click', () => {
+ state.dispatch(state.getAction('whateverAction', { appendText: 'HELLO', field: 'whateverText' }));
+})
 ```
 <a name="State+getState"></a>
 
