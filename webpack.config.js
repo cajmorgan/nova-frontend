@@ -1,8 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  entry: './test/Element/index.js',
-  mode: 'production',
+  entry: './test/Generator/index.js',
+  mode: 'development',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
