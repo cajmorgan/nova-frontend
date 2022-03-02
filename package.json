@@ -4,8 +4,8 @@
   "description": "Nova is an alternative to all those gigantic front-end frameworks, that often do more than is necessary when it comes to building simple UIs. Pure Vanilla Javascript is performance-wise the best way to build your front-end in a SPA, but it can be hard to organize it properly and as the project grows, it might end up very messy. This is where Nova comes in, being a lightweight library packed with functionality for creating and structuring UIs more easily.",
   "main": "nova.js",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack",
+    "start": "node server.js",
+    "build": "node ./nova-builder",
     "test": "node server.js && node test/app.test.js",
     "docs": "node docConfig.js"
   },
@@ -25,12 +25,8 @@
     "url": "https://github.com/cajmorgan/nova-frontend/issues"
   },
   "homepage": "https://github.com/cajmorgan/nova-frontend#readme",
-  "dependencies": {
-    "webpack": "^5.61.0",
-    "webpack-dev-server": "^4.4.0"
-  },
   "devDependencies": {
     "jsdoc-to-markdown": "^7.1.0",
-    "webpack-cli": "^4.9.1"
+    "terser": "^5.12.0"
   }
 }

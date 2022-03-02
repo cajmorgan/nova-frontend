@@ -1,3 +1,3 @@
-const { Element, Generator, Component, Group, Router, State, root } = require('./lib/nova');
+const { Element, Generator, Component, Group, Router, State, StaticCompiler, StaticElement, StaticComponent, StaticGenerator } = require('./lib/nova');
 
-module.exports = { Element, Generator, Component, Group, Router, State, root }
+module.exports = { Element, Generator, Component, Group, Router, State, StaticCompiler, StaticElement, StaticComponent, StaticGenerator }
