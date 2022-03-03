@@ -1,1 +1,1 @@
-const helloWorld="hello",dynamicstuff="GALLERY",helloWorlds="hello",dynamicstuffz="HEADER";
+const helloWorld="hello",dynamicstuff="GALLERY",helloWorlds="hello",dynamicstuffz="HEADER",hello=new Element("div",root,{innerText:"IM A ELEMENT"},!0);

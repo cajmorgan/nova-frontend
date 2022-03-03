@@ -1,10 +1,14 @@
 const fs = require('fs/promises');
+const path = require('path');
 const nova = require('./lib/nova');
 const { minify } = require('terser');
 const packageinfo = require('./package.json');
 
 (async function buildNova() {
   try {
+    const dir = await fs.readdir(__dirname);
+    const oldfile = dir.find(file => /nova\d/.test(file));
+    await fs.unlink(path.join(__dirname, oldfile));
 
     let buildString = "const root = document.getElementById('root')";
 
