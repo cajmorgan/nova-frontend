@@ -23,23 +23,3 @@ const packageinfo = require('./package.json');
     console.error(`BUILD ERROR: ${e.message}`)
   }
 })()
-
-
-  // import resolve from 'resolve';
-
-  // const url = import.meta.url;
-
-
-  // const testimport = {}
-
-  // export default testimport;
-
-  // resolve('jsdoc-to-markdown', (err, res) => {
-  //   console.log(res);
-  //   console.log(err);
-  // })
-
-
-  + "43"
-
-"5453"

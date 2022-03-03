@@ -1,0 +1,1 @@
+const helloWorld="hello",dynamicstuff="GALLERY",helloWorlds="hello",dynamicstuffz="HEADER";

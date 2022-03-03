@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/cajmorgan/nova-frontend#readme",
   "devDependencies": {
+    "clean-css": "^5.2.4",
+    "express": "^4.17.3",
     "jsdoc-to-markdown": "^7.1.0",
     "terser": "^5.12.0"
   }
