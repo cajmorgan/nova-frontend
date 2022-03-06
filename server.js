@@ -1,13 +1,13 @@
 const express = require('express');
 const path = require('path');
-const { StaticCompiler } = require('./index');
+const { StaticCompiler } = require('./nova.js');
 
 const app = express();
 app.use(express.static('build'));
 
 (async () => {
-  const compiler = new StaticCompiler([], {}, '', true);
-  await compiler.fullBuild();
+  const compiler = new StaticCompiler([], '', { isBuilding: true });
+  await compiler.watch();
 
   // console.log(compiler)
 })()

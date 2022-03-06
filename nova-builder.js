@@ -1,6 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
-const nova = require('./lib/nova');
+const nova = require('./nova');
 const { minify } = require('terser');
 const packageinfo = require('./package.json');
 

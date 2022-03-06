@@ -1,4 +1,4 @@
-const { StaticGenerator } = require('../../../../index')
+const { StaticGenerator } = require('../../../../nova')
 
 const gen = new StaticGenerator();
 

@@ -1,4 +1,4 @@
-const { Element } = require('../../../../index');
+const { Element } = require('../../../../nova');
 
 /** @nova */
 const helloWorld = 'hello';

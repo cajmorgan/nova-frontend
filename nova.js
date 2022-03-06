@@ -6,17 +6,17 @@
 * This is where Nova comes in, 
 * being a lightweight library packed with functionality for creating and structuring UIs more easily.
 */
-const Element = require('./dynamic/Element');
-const Generator = require('./dynamic/Generator');
-const Component = require('./dynamic/Component');
-const Group = require('./dynamic/Group');
-const Router = require('./dynamic/Router');
-const State = require('./dynamic/State');
+const Element = require('./lib/dynamic/Element');
+const Generator = require('./lib/dynamic/Generator');
+const Component = require('./lib/dynamic/Component');
+const Group = require('./lib/dynamic/Group');
+const Router = require('./lib/dynamic/Router');
+const State = require('./lib/dynamic/State');
 /** STATIC */
-const StaticGenerator = require('./static/StaticGenerator');
-const StaticElement = require('./static/StaticElement');
-const StaticCompiler = require('./static/StaticCompiler');
-const StaticComponent = require('./static/StaticComponent');
+const StaticGenerator = require('./lib/static/StaticGenerator');
+const StaticElement = require('./lib/static/StaticElement');
+const StaticCompiler = require('./lib/static/StaticCompiler');
+const StaticComponent = require('./lib/static/StaticComponent');
 
 module.exports = {
   Component,
