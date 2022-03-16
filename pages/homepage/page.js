@@ -4,6 +4,6 @@ const gallery = require('./components/gallery/static');
 
 const components = [header, gallery]
 
-const compiler = new StaticCompiler(components, 'homepage', { lang: 'se', customScripts: [{ src: './hello.js', mode: 'defer' }], importComponents: [{ page: 'contact', component: 'form' }] })
+const compiler = new StaticCompiler(components, 'homepage', { lang: 'se' })
 
 compiler.compile();

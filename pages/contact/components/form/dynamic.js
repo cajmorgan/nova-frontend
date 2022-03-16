@@ -1,1 +1,1 @@
-const baja = hiho;
+const baja = 'hiho';

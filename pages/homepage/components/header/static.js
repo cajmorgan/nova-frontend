@@ -4,7 +4,6 @@ const gen = new StaticGenerator();
 
 const header = gen.createTree(`
   div className: 'grandfather' id: 'awesome'
-    img src: 'https://hello.com/hello'
     div className: 'mother'
       h1 innerText: 'hello'
       h2 innerText: 'well'
