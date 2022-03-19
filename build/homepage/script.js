@@ -1,1 +1,1 @@
-const helloWorld="hello",dynamicstuff="GALLERY",helloWorlds="hello",dynamicstuffz="HEADER",hello=new Element("div",root,{innerText:"IM A ELEMENT",className:"yoo"},!0);
+const helloWorld="hello",dynamicstuff="GALLERY";console.log("HELLO FROM GALLERY");const helloWorlds="hello",dynamicstuffz="HEADER",hello=new Element("div",root,{innerText:"IM A ELEMENT",className:"yoo"},!0);

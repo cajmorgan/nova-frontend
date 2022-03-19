@@ -1,9 +1,9 @@
 const { StaticCompiler } = require('../../nova');
 const header = require('./components/header/static');
-const gallery = require('./components/gallery/static');
 
-const components = [header, gallery]
+const components = [header('five')];
 
-const compiler = new StaticCompiler(components, 'homepage', { lang: 'se' })
+const importComponents = [{ component: 'gallery' }];
+const compiler = new StaticCompiler(components, 'homepage', { lang: 'se', title: 'nova', importComponents })
 
 compiler.compile();
